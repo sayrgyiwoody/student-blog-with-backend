@@ -83,7 +83,7 @@
     </div>
     <!-- END MAIN CONTENT-->
 
-    
+
 @if (session('createMessage'))
 
     @section('scriptSource')
@@ -133,7 +133,7 @@
                 $post_id = $parentNode.find('.post-id').html();
                 Swal.fire({
                 title: 'Are you sure?',
-                text: "This topic will be deleted!",
+                text: "This post will be deleted!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',

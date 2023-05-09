@@ -73,8 +73,8 @@ class AdminController extends Controller
     // Direct to admin accounts list
     public function adminList() {
         $accounts = User::when(request('searchKey'),function($query){
-            $query->orWhere('name','like','%'.request('searchKey').'%')
-                  ->orWhere('email','like','%'.request('searchKey').'%');
+            $query->where('name','like','%'.request('searchKey').'%')
+                  ->where('role','admin');
         })
         ->where('role','admin')
         ->paginate(4);
@@ -85,9 +85,8 @@ class AdminController extends Controller
     // Direct to user accounts list
     public function userList() {
         $accounts = User::when(request('searchKey'),function($query){
-            $query->orWhere('name','like','%'.request('searchKey').'%')
-                  ->orWhere('email','like','%'.request('searchKey').'%');
-
+            $query->where('name','like','%'.request('searchKey').'%')
+                ->where('role','user');
         })
         ->where('role','user')
         ->paginate(4);
