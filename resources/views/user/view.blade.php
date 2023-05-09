@@ -6,8 +6,9 @@
         <div class="col-lg-8 offset-lg-2 pt-2  pt-lg-5" style="height: 92vh; overflow-y: scroll;background-color: #e5e5e5;">
             <div class="card-box d-flex justify-content-center mb-4 mb-lg-5">
                 <div class="card shadow rounded border-0" style="width: 40rem">
-                    <h5 class="card-title mt-3 fw-bold ms-3">
+                    <h5 class="card-title mt-3 fw-bold ms-3 d-flex justify-content-between align-items-center">
                         <span class="me-2 text-primary border-start border-4 border-dark ps-1">{{$topic_name}}</span>
+                        <div class="btn me-4 copy"><span class="me-2 text-muted">click to copy text</span><i class="fa-solid fa-clipboard  fs-3 "></i></div>
                     </h5>
                     <div class="d-flex align-items-center ms-3 mt-1 ">
                         <div style="width: 55px; height: 55px; overflow: hidden;border-radius: 50%;">
@@ -45,3 +46,29 @@
 </div>
 @endsection
 
+@section('scriptSource')
+<script>
+    $(document).ready(function() {
+        //auto detect link
+        const linkRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+        const $cardText = $(".card-text");
+        const modifiedHTML = $cardText.html().replace(linkRegex, '<a target="_blank" href="$1">$1</a>');
+        $cardText.html(modifiedHTML);
+
+        //click to copy
+        $('.copy').click(function() {
+        navigator.clipboard.writeText($('.card-text').text());
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Copied to clipboard',
+            showConfirmButton: true,
+            // timer: 1500
+            })
+        })
+    })
+
+</script>
+
+
+@endsection

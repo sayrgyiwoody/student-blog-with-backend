@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Storage;
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Saved;
 use App\Models\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -19,7 +20,7 @@ class PostController extends Controller
             ->orWhere('posts.desc','like','%'.request('searchKey').'%');
         })
         ->leftJoin('topics','posts.topic_id','topics.id')
-        ->orderBy('posts.updated_at','desc')->paginate(5);
+        ->orderBy('posts.created_at','desc')->paginate(5);
         return view('admin.post.list',compact('post'));
     }
 
@@ -31,7 +32,7 @@ class PostController extends Controller
             ->orWhere('posts.desc','like','%'.request('searchKey').'%');
         })
         ->leftJoin('topics','posts.topic_id','topics.id')
-        ->orderBy('posts.updated_at','asc')->paginate(5);
+        ->orderBy('posts.created_at','asc')->paginate(5);
         return view('admin.post.list',compact('post'));
     }
 
@@ -101,6 +102,7 @@ class PostController extends Controller
             if($dbImage!=null) {
                 Storage::delete('public/'.$dbImage);
             }
+        Saved::where('post_id',$request->post_id)->delete();
         Post::where('id',$request->post_id)->delete();
         return response()->json(200);
     }

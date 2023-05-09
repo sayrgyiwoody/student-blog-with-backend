@@ -53,6 +53,7 @@ class SavedController extends Controller
         ->leftJoin('topics','posts.topic_id','topics.id')
         ->where('user_id',Auth::user()->id)->get();
         $topics = Topic::get();
+        // dd($posts->toArray(),$topics->toArray());
         return view('user.saved',compact('posts','topics'));
     }
 }

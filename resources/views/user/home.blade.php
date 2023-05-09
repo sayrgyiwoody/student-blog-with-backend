@@ -94,6 +94,14 @@
 @section('scriptSource')
 <script>
     $(document).ready(function() {
+        //auto detect link
+        $(".card-text").each(function() {
+            const linkRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+            const modifiedHTML = $(this).html().replace(linkRegex, '<a target="_blank" href="$1">$1</a>');
+            $(this).html(modifiedHTML);
+        });
+
+        //Save post
         $('.btn-save').click(function(){
             $parentNode = $(this).parents('.card-box');
             $parentNode.find('.fa-bookmark').addClass('fa-solid');
