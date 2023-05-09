@@ -19,7 +19,11 @@
                         </div>
                     </div>
                     <div class="img-container pt-3 px-4 ">
-                    <img src="{{asset('storage/'.$post->image)}}" class="card-img-top img-thumbnail border border-dark" alt="" />
+                        @if ($post->image)
+                        <img src="{{asset('storage/'.$post->image)}}" class="card-img-top img-thumbnail border border-dark" alt="" />
+                        @else
+                        <img src="{{asset('images/alert gif/postimg.jpg')}}" class="card-img-top img-thumbnail border border-dark" alt="" />
+                        @endif
                     </div>
                     <div class="card-body">
                         <p class="card-text" style="white-space: pre-wrap">{{$post->desc}}</p>
