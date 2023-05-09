@@ -9,16 +9,10 @@
            <div class="card-box d-flex justify-content-center mb-4">
                <div class="card shadow rounded border-0" style="width: 35rem">
                    <h5 class="card-title mt-3 fw-bold ms-3">
-                       <span class="me-2 text-primary border-start border-4 border-dark ps-1">
-
-                           <select  class="border-0 bg-white text-primary fw-semibold" disabled>
-                               @foreach ($topics as $topic)
-                               <option @if ($topic->id == $post->topic_id) selected @endif >{{$topic->name}}</option>
-                               @endforeach
-
-                           </select>
-                           <input class="post_id" type="hidden" value="{{$post->id}}">
-                       </span>
+                    <span class="me-2 text-primary border-start border-4 border-dark ps-1">
+                        {{$post->topic_name}}
+                        <input class="post_id" type="hidden" value="{{$post->id}}">
+                    </span>
                    </h5>
                    <div class="d-flex align-items-center ms-3 mt-1 ">
                        <div style="width: 55px; height: 55px; overflow: hidden;border-radius: 50%;">

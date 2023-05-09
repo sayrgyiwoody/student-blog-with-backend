@@ -47,9 +47,10 @@ class SavedController extends Controller
 
     //saved list page
     public function savedList() {
-        $posts = Saved::select('saveds.*','posts.*','users.gender as admin_gender','users.name as admin_name','users.image as profile_image')
+        $posts = Saved::select('saveds.*','posts.*','topics.name as topic_name','users.gender as admin_gender','users.name as admin_name','users.image as profile_image')
         ->leftJoin('posts','saveds.post_id','posts.id')
         ->leftJoin('users','posts.admin_id','users.id')
+        ->leftJoin('topics','posts.topic_id','topics.id')
         ->where('user_id',Auth::user()->id)->get();
         $topics = Topic::get();
         return view('user.saved',compact('posts','topics'));
