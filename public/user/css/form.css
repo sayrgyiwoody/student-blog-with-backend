@@ -1,0 +1,65 @@
+* {
+    font-family: 'Poppins', sans-serif;
+}
+.login-container {
+    width: auto;
+    min-width: 80%;
+    height: auto;
+    border-radius: 55px;
+
+}
+
+.login-container .btn {
+    border-radius: 24px;
+}
+
+.login-container .bg-image {
+    border-top-left-radius: 55px;
+    border-bottom-left-radius: 55px;
+    background-image: url("https://github.com/Sayrgyiwoody/students-blog/blob/main/images/collegebg.jpg?raw=true");
+    /* background-image: url("/asset/user/images/collegebg.jpg"); */
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+}
+
+
+.login-form-container {
+    padding-left: 50px;
+}
+
+.register-form-container {
+    padding-right: 75px;
+}
+
+.contact-form {
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+
+@media only screen and (max-width: 600px) {
+    .login-form-container {
+        padding-left: 0px;
+    }
+
+    .register-form-container {
+        padding-right: 0px;
+    }
+
+    .form-container {
+        padding: 30px 10px;
+    }
+
+    .form-container-rg {
+        padding: 20px 10px;
+    }
+
+    .login-container {
+        border-radius: 0px;
+
+    }
+    h2 {
+        font-size: 23px;
+    }
+
+  }

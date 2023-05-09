@@ -1,0 +1,116 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\SavedController;
+use App\Http\Controllers\TopicController;
+use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\AdminHomeController;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
+
+Route::redirect('/', 'login');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard',[AuthController::class,'dashboard'])->name('auth#dashboard');
+
+    //Admin
+    Route::group(['prefix'=>'admin','middleware'=>'admin_auth'],function() {
+        //direct home page
+        // Route::get('home',function() {
+        //     return view('admin.home');
+        // })->name('admin#home');
+
+        Route::get('home',[AdminHomeController::class,'home'])->name('admin#home');
+
+        // Admin account
+        Route::group(['prefix'=>'account'],function() {
+            Route::get('changPasswordPage',[AdminController::class,'changePasswordPage'])->name('admin#changePasswordPage');
+            Route::post('changePassword',[AdminController::class,'changePassword'])->name('admin#changePassword');
+            Route::get('informationPage',[AdminController::class,'informationPage'])->name('admin#informationPage');
+            Route::get('updateAccountPage',[AdminController::class,'updateAccountPage'])->name('admin#updateAccountPage');
+            Route::post('updateAccount/{id}',[AdminController::class,'updateAccount'])->name('admin#updateAccount');
+            Route::get('admin/list',[AdminController::class,'adminList'])->name('admin#adminAccountList');
+            Route::get('delete',[AdminController::class,'delete'])->name('admin#delete');
+            Route::get('change/userRole/{id}',[AdminController::class,'changeUserRole'])->name('admin#changeUserRole');
+            Route::get('user/list',[AdminController::class,'userList'])->name('admin#userAccountList');
+            Route::get('change/adminRole/{id}',[AdminController::class,'changeAdminRole'])->name('admin#changeAdminRole');
+        });
+
+        //Topic
+        Route::group(['prefix'=>'topic'],function() {
+            Route::get('/',[TopicController::class,'listPage'])->name('topic#listPage');
+            Route::get('createPage',[TopicController::class,'createPage'])->name('topic#createPage');
+            Route::post('create',[TopicController::class,'create'])->name('topic#create');
+            Route::get('editPage/{id}',[TopicController::class,'editPage'])->name('topic#editPage');
+            Route::post('edit,{id}',[TopicController::class,'edit'])->name('topic#edit');
+            Route::get('delete',[TopicController::class,'delete'])->name('topic#delete');
+            Route::get('asc',[TopicController::class,'filterAsc'])->name('topic#filterAsc');
+        });
+
+        //Post
+        Route::group(['prefix'=>'post'],function() {
+            Route::get('/',[PostController::class,'listPage'])->name('post#listPage');
+            Route::get('asc',[PostController::class,'filterAsc'])->name('post#filterAsc');
+            Route::get('mostSaved',[PostController::class,'mostSaved'])->name('post#mostSaved');
+            Route::get('createPage',[PostController::class,'createPage'])->name('post#createPage');
+            Route::post('create',[PostController::class,'create'])->name('post#create');
+            Route::get('view/{id}',[PostController::class,'view'])->name('post#view');
+            Route::get('delete',[PostController::class,'delete'])->name('post#delete');
+            Route::get('editPage/{id}',[PostController::class,'editPage'])->name('post#editPage');
+            Route::post('edit/{id}',[PostController::class,'edit'])->name('post#edit');
+        });
+
+        //Feedback
+        Route::group(['prefix'=>'feedback'],function() {
+            Route::get('list',[FeedbackController::class,'adminPage'])->name('admin#feedbackPage');
+            Route::get('delete',[FeedbackController::class,'delete'])->name('admin$feedbackDelete');
+            Route::get('list/viewPage/{id}',[FeedbackController::class,'view'])->name('admin#feedbackView');
+            Route::get('delete/all',[FeedbackController::class,'deleteAll'])->name('admin$feedbackDeleteAll');
+
+        });
+    });
+
+
+    //User
+    Route::group(['prefix'=>'user','middleware'=>'user_auth'],function() {
+        //direct home page
+        // Route::get('home',function() {
+        //     return view('user.home');
+        // })->name('user#home');
+
+        Route::group(['prefix'=>'home'],function(){
+            Route::get('/',[UserController::class,'home'])->name('user#home');
+            Route::get('view/{id}',[UserController::class,'view'])->name('user#view');
+            Route::get('topicFilter/{id}',[UserController::class,'topicFilter'])->name('user#topicFilter');
+            Route::get('save',[SavedController::class,'save'])->name('user#save');
+        });
+
+        Route::group(['prefix'=>'saved'],function(){
+            Route::get('list',[SavedController::class,'savedList'])->name('saved#list');
+            Route::get('unsave',[SavedController::class,'unsave'])->name('saved#unsave');
+
+        });
+
+        Route::group(['prefix'=>'feedback'],function(){
+            Route::get('/',[FeedbackController::class,'form'])->name('feedback#form');
+            Route::post('send',[FeedbackController::class,'send'])->name('feedback#send');
+        });
+    });
+
+
+
+
+});
