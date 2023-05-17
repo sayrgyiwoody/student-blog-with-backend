@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="row">
-        <div class="col-lg-6 offset-lg-3  pt-4" style="height: 91vh; overflow-y: scroll;background-color: #e5e5e5;">
+        <div class="col-lg-6 offset-lg-3 bg-card pt-4" style="height: 91vh; overflow-y: scroll;">
            @if (count($posts)!=0)
            @foreach ($posts as $post )
            <div class="card-box d-flex justify-content-center mb-4">
@@ -13,14 +13,24 @@
                         {{$post->topic_name}}
                         <input class="post_id" type="hidden" value="{{$post->id}}">
                     </span>
+                    <a href="{{asset('storage/'.$post->image)}}" target="_blank" download="{{$post->image}}" class="btn btn-sm btn-outline-primary float-end me-3">Download<i class="ms-2 fa-solid fa-download"></i></a>
                    </h5>
                    <div class="d-flex align-items-center ms-3 mt-1 ">
                        <div style="width: 55px; height: 55px; overflow: hidden;border-radius: 50%;">
-                           <img class="w-100 h-100" style="object-fit: cover; object-position:center;" src="https://ui-avatars.com/api/?name={{$post->admin_name}}"/>
+                            @if ($post->profile_image)
+                                <img src="{{asset('storage/profileImages/'.$post->profile_image)}}" style="object-fit:cover;object-position:center;" class="w-100 h-100 rounded-circle card-img-top " alt="" />
+                            @else
+                                <img class="w-100 h-100 rounded-circle" style="object-fit: cover; object-position:center;" src="https://ui-avatars.com/api/?name={{$post->admin_name}}"/>
+                            @endif
                        </div>
-                       <div class="ms-2">
-                           <span style="font-size: 18px;" class="fw-semibold" >{{$post->admin_name}}</span><br>
-                           <span style="font-size: 12px;" class="">{{$post->created_at->diffForHumans()}}</span>
+                       <div class="d-flex ">
+                        <div class="ms-2">
+                            <span style="font-size: 18px;" class="fw-semibold" >{{$post->admin_name}}</span><br>
+                            <span style="font-size: 12px;" class="">{{$post->created_at->diffForHumans()}}</span>
+                        </div>
+                        @if ($post->role == 'admin')
+                            <i class="bi bi-patch-check-fill mt-1 ms-1 " style="color: #1DA1F2"></i>
+                        @endif
                        </div>
                    </div>
                    <div class="img-container pt-3 px-4 ">
@@ -35,7 +45,7 @@
                        <hr />
                        <div class="d-flex justify-content-between align-items-center">
                                <div class="d-flex align-items-center">
-                                <div class="btn bg-white btn-unsave">
+                                <div class="btn  btn-unsave">
                                     <i class="fa-regular fa-solid text-primary fa-bookmark fs-3"></i>
                                 </div>
                                 <span class="text-primary">saved</span>
@@ -51,6 +61,9 @@
            @else
            <h4 class="text-center text-primary">No post saved yet.</h4>
            @endif
+           <div class="mt-2">
+            {{$posts->appends(request()->query())->links()}}
+            </div>
         </div>
     </div>
 </div>
@@ -59,6 +72,13 @@
 @section('scriptSource')
 <script>
     $(document).ready(function() {
+        //auto detect link
+        $(".card-text").each(function() {
+            const linkRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+            const modifiedHTML = $(this).html().replace(linkRegex, '<a target="_blank" href="$1">$1</a>');
+            $(this).html(modifiedHTML);
+        });
+
         $('.btn-unsave').click(function(){
             $parentNode = $(this).parents('.card-box');
             $parentNode.find('.fa-bookmark').addClass('fa-solid');

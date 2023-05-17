@@ -3,20 +3,20 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-use App\Models\Post;
 use App\Models\User;
-use App\Models\Saved;
+use App\Models\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
-class AdminController extends Controller
+class UserAccountController extends Controller
 {
     //Direct change password page
     public function changePasswordPage() {
-        return view('admin.account.changePasswordPage');
+        $topics = Topic::get();
+        return view('user.account.changePasswordPage',compact('topics'));
     }
 
     //Change new password
@@ -29,7 +29,7 @@ class AdminController extends Controller
                 'password' => $newPassword
             ]);
         }
-        return redirect()->route('admin#home')->with(['changePw'=>'Password changed successfully']);
+        return redirect()->route('user#home')->with(['changePw'=>'Password changed successfully']);
     }
 
     //check password validation
@@ -41,14 +41,16 @@ class AdminController extends Controller
         ])->validate();
     }
 
-    //Direct to admin account information page
+    //Direct to user account information page
     public function informationPage() {
-        return view('admin.account.informationPage');
+        $topics = Topic::get();
+        return view('user.account.informationPage',compact('topics'));
     }
 
     //Direct to Update account page
     public function updateAccountPage() {
-        return view('admin.account.updateAccountPage');
+        $topics = Topic::get();
+        return view('user.account.updateAccountPage',compact('topics'));
     }
 
 
@@ -68,48 +70,7 @@ class AdminController extends Controller
             $request->file('image')->storeAs('public/profileImages/',$imageName);
         }
         User::where('id',$id)->update($data);
-        return redirect()->route('admin#informationPage')->with(['updateAlert' => 'Admin information updated.']);
-    }
-
-    // Direct to admin accounts list
-    public function adminList() {
-        $accounts = User::when(request('searchKey'),function($query){
-            $query->where('name','like','%'.request('searchKey').'%')
-                  ->where('role','admin');
-        })
-        ->where('role','admin')
-        ->paginate(4);
-        return view('admin.account.adminList',compact('accounts'));
-
-    }
-
-    // Direct to user accounts list
-    public function userList() {
-        $accounts = User::when(request('searchKey'),function($query){
-            $query->where('name','like','%'.request('searchKey').'%')
-                ->where('role','user');
-        })
-        ->where('role','user')
-        ->paginate(4);
-        return view('admin.account.userList',compact('accounts'));
-
-    }
-
-
-    //change admin to user role
-    public function changeUserRole($id) {
-        User::where('id',$id)->update([
-            'role' => 'user'
-        ]);
-        return back()->with(['adminRoleChangeAlert' => 'Admin to User role changed successfully.']);
-    }
-
-    //change admin to user role
-    public function changeAdminRole($id) {
-        User::where('id',$id)->update([
-            'role' => 'admin'
-        ]);
-        return back()->with(['adminRoleChangeAlert' => 'User to Admin role changed successfully.']);
+        return redirect()->route('user#informationPage')->with(['updateAlert' => 'Admin information updated.']);
     }
 
     //Account input validation check
@@ -130,13 +91,5 @@ class AdminController extends Controller
             'updated_at' => Carbon::now(),
             'gender' => $request->gender,
         ];
-    }
-
-    //delete account
-    public function delete(Request $request) {
-        User::where('id',$request->account_id)->delete();
-        Post::where('admin_id',$request->account_id)->delete();
-        Saved::where('user_id',$request->account_id)->delete();
-        return response()->json(200);
     }
 }

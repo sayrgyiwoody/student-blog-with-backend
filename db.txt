@@ -1,0 +1,39 @@
+
+db name =
+user name =
+password =
+
+Deploy lara project
+
+1. create db
+2. create sub domain
+3. zip create (project)
+4. upload to server (sub domain file)
+5. Extract zip file
+6. connect database with project env file
+7. create migration with terminal
+
+
+
+for loading
+<div id="loading" style="display:none;">Loading...</div>
+
+public function getData()
+{
+    $processing = true;
+
+    // Fetch data from the database or other source
+    $data = YourModel::all();
+
+    $processing = false;
+
+    return view('your-view', compact('data', 'processing'));
+}
+
+@if($processing)
+    <div id="loading">Loading...</div>
+@endif
+
+@foreach($data as $item)
+    // Display data here
+@endforeach

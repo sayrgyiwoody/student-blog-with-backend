@@ -69,8 +69,8 @@
         <!-- MENU SIDEBAR-->
         <aside class="menu-sidebar d-none d-lg-block">
             <div class="logo">
-                <a href="#">
-                    <img src="" width="150px" alt="" class="img" />
+                <a href="#" class="mx-auto" >
+                    <img src="{{asset('images/logo.png')}}" width="150px" alt="" class="img" />
                 </a>
             </div>
             <div class="">
@@ -113,7 +113,7 @@
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
                         <div class="header-wrap">
-                            <h3>Students' blog page dashboard pannel</h3>
+                            <h3 class="d-none d-lg-block">Students' blog page dashboard pannel</h3>
                             <div class="header-button">
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
@@ -202,7 +202,9 @@
             var linkUrl = $(this).attr('href');
 
             if(currentUrl.indexOf(linkUrl) != -1) {
-                $(this).addClass('bg-primary text-white');
+                // $(this).addClass('bg-primary text-white');
+                $(this).addClass('border border-4 border-primary fw-semibold fs-5');
+
 
             }
         })

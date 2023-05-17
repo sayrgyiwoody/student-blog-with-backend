@@ -24,19 +24,26 @@
      <!-- Add SweetAlert styles -->
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.6/dist/sweetalert2.min.css">
 
+     {{-- bootstrap icon --}}
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
 </head>
 
-<body>
+<body class="body">
     <!-- Navbar Start -->
-    <div class="container-fluid bg-dark">
-        <div class="row px-5">
+    <div class="container bg-dark">
+        <div class="row">
             <div class="col">
                 <nav class="navbar navbar-dark navbar-expand-lg bg-dark ">
-                    <div class="container-fluid">
+                    <div class="container">
                       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                       </button>
-                      <a class="navbar-brand fw-semibold text-light" href="#">LOGO</a>
+                      <div class="form-check form-switch mx-auto">
+                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                      </div>
+                      <div class="btn bg-dark text-primary me-3 darkmode-icon " disabled><i class="bi bi-sun-fill"></i></div>
+                      <a class="navbar-brand fw-semibold text-light" href="#">UCSY</a>
                       <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
                         <ul class="navbar-nav me-auto mx-lg-auto mb-2 mb-lg-0 ms-0">
                           <li class="nav-item">
@@ -47,6 +54,9 @@
                           </li>
                           <li class="nav-item ">
                             <a class="nav-link " href="{{route('feedback#form')}}">Feedback</a>
+                          </li>
+                          <li class="nav-item ">
+                            <a class="nav-link " href="{{route('user#postHome')}}">Create Post</a>
                           </li>
                           <div class="dropdown  d-lg-none">
                             <button class="btn text-white btn-white border border-primary border-2 dropdown-toggle" type="button" data-bs-toggle="dropdown"
@@ -65,10 +75,19 @@
                           <input  name="searchKey" value="{{request('searchKey')}}"  class="form-control me-2" type="search" placeholder="Search for content" aria-label="Search">
                           <button class="btn btn-outline-primary" type="submit">Search</button>
                         </form>
-                        <form method="POST" action="{{route('logout')}}">
-                        @csrf
-                        <button type="submit" class="btn btn-primary mt-3 mt-lg-0">Logout</button>
-                        </form>
+                        <div class="btn-group  mt-3 mt-lg-0">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{Auth::user()->name}}
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{route('user#informationPage')}}">Profile</a></li>
+                                <li><a class="dropdown-item" href="{{route('user#changePasswordPage')}}">Change Password</a></li>
+                                <form class=" px-2 pt-2 d-flex justify-content-center" method="POST" action="{{route('logout')}}">
+                                  @csrf
+                                  <button type="submit" class="btn btn-primary w-100">Logout</button>
+                              </form>
+                            </ul>
+                        </div>
                       </div>
                     </div>
                 </nav>
@@ -103,6 +122,44 @@
                     $(this).addClass('text-primary');
                 }
             })
+
+
+            $(document).ready(function() {
+                if(localStorage.getItem('dark-mode') === 'true') {
+                    $('.form-check-input').prop('checked', true);
+                    enableDarkMode();
+                }
+
+
+                $('#flexSwitchCheckDefault').on('change', function() {
+                    if($(this).prop('checked')) {
+                        enableDarkMode();
+                        localStorage.setItem('dark-mode', true);
+                    } else {
+                        disableDarkMode();
+                        localStorage.setItem('dark-mode', false);
+                    }
+                });
+            });
+
+            function enableDarkMode() {
+                $('.darkmode-icon').html('<i class="bi bi-moon-stars-fill"></i>');
+                $('.card').addClass('card-dark border-primary');
+                $('.body').addClass('card-dark');
+                $('.bg-card').addClass('body-dark');
+                $('.btn-white').addClass('btn-dark');
+            }
+
+            function disableDarkMode() {
+                $('.card').removeClass('card-dark border-primary');
+                $('.body').removeClass('card-dark');
+                $('.bg-card').removeClass('body-dark');
+                $('.btn-white').removeClass('btn-dark');
+                $('.darkmode-icon').html('<i class="bi bi-sun-fill"></i>');
+
+            }
+
+
         </script>
 </body>
 

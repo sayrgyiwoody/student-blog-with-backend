@@ -8,7 +8,7 @@
     <div class="main-content">
         <div class="section__content section__content--p30">
             <div class="container-fluid">
-                <div class="col-lg-7 offset-2">
+                <div class="col-lg-8 offset-lg-2">
                     <div class="card">
                         <div class="card-body">
                             <div class="card-title">
@@ -20,8 +20,12 @@
                                 <div class="form-group mt-3">
                                     <div class="row ">
                                         <div class="col-lg-6 ">
-                                            <div style="width: 260px; height: 260px; overflow: hidden;">
-                                                <img class="img-thumbnail w-100 h-100" style="object-fit: cover; object-position:center;" src="https://ui-avatars.com/api/?name={{Auth::user()->name}}"/>
+                                            <div style="width: 300px; height: 300px; overflow: hidden;">
+                                                @if (Auth::user()->image)
+                                                <img src="{{asset('storage/profileImages/'.Auth::user()->image)}}" style="object-fit:cover;object-position:center;" class="w-100 h-100 img-thumbnail card-img-top " alt="" />
+                                                @else
+                                                <img class="w-100 h-100 img-thumbnail" style="object-fit: cover; object-position:center;" src="https://ui-avatars.com/api/?name={{$post->admin_name}}"/>
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -57,12 +61,12 @@
                                                     <input readonly disabled type="text" name="" class="form-control form-control-sm border-0 border-bottom border-dark   bg-white" value="{{Auth::user()->email}}" id="">
                                                 </div>
                                             </div>
+                                            <div class="row p-3 d-flex justify-content-evenly">
+                                                <a href="{{route('admin#home')}}" style="width: 45%" class="btn btn-secondary"><i class="fa-solid fa-arrow-left  me-2"></i>Back</a>
+                                                <a href="{{route('admin#updateAccountPage')}}" style="width: 45%" class="btn btn-primary"><i class="fa-solid fa-pen-to-square  me-2"></i>Edit</a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="float-end me-5 mt-2">
-                                    <a href="{{route('admin#home')}}" class="btn btn-secondary"><i class="fa-solid fa-arrow-left me-2"></i>Back</a>
-                                    <a href="{{route('admin#updateAccountPage')}}" class="btn btn-primary"><i class="fa-solid fa-pen-to-square me-2"></i>Edit</a>
                                 </div>
                             </form>
                         </div>

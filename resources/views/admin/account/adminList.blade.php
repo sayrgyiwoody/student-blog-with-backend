@@ -57,6 +57,9 @@
                                             </button>
                                         </a>
                                         <input type="hidden" class="account-id" value="{{$account->id}}">
+                                        <button class="btn btn-white rounded-0 me-3 delete-account shadow_2">
+                                            <i class="zmdi zmdi-delete" style="color: #262626"></i>
+                                        </button>
 
                                         @else
                                         <button type="button" class="btn btn-white  shadow_2">
@@ -109,13 +112,13 @@
 
 @section('scriptSource')
 
-{{-- <script>
+<script>
     $('.delete-account').click(function() {
             $parentNode = $(this).parents('tr');
             $account_id = $parentNode.find('.account-id').val();
             Swal.fire({
             title: 'Are you sure?',
-            text: "This account will be deleted forever!",
+            text: "This account and all his posts will be deleted forever!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -145,6 +148,6 @@
             }
             })
         })
-</script> --}}
+</script>
 
 @endsection

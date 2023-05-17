@@ -8,7 +8,7 @@
     <div class="main-content">
         <div class="section__content section__content--p30">
             <div class="container-fluid">
-                <div class="col-md-6 offset-3 bg-white">
+                <div class="col-md-6 offset-lg-3 bg-white">
                     <form action="{{route('post#edit',$post->id)}}" method="POST" class="px-4 py-3" enctype="multipart/form-data">
                         @csrf
                         <label for="name" class="form-label fw-semibold">Name</label>

@@ -74,10 +74,10 @@
                                                 <i class="fa-solid fa-shield-halved" style="color: #262626"></i>
                                             </button>
                                         </a>
-                                        {{-- <input type="hidden" class="account-id" value="{{$account->id}}">
-                                        <button class="btn btn-white rounded-0 me-3 delete-account shadow_2 "  >
-                                                <i class="zmdi zmdi-delete" style="color: #262626"></i>
-                                        </button> --}}
+                                        <input type="hidden" class="account-id" value="{{$account->id}}">
+                                        <button class="btn btn-white rounded-0 me-3 delete-account shadow_2">
+                                            <i class="zmdi zmdi-delete" style="color: #262626"></i>
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
@@ -103,14 +103,14 @@
 
 @section('scriptSource')
 
-{{-- <script>
 
+<script>
     $('.delete-account').click(function() {
             $parentNode = $(this).parents('tr');
             $account_id = $parentNode.find('.account-id').val();
             Swal.fire({
             title: 'Are you sure?',
-            text: "This account will be deleted forever!",
+            text: "This account and his saved informations will be deleted forever!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -130,7 +130,7 @@
                         'success'
                         ).then((result) => {
                             if (result.isConfirmed) {
-                                window.location.href = '/admin/account/user/list';
+                                location.reload();
                             }
                         });
                     }
@@ -140,6 +140,6 @@
             }
             })
         })
-</script> --}}
+</script>
 
 @endsection

@@ -1,14 +1,18 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Password;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SavedController;
 use App\Http\Controllers\TopicController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\UserPostController;
 use App\Http\Controllers\AdminHomeController;
+use App\Http\Controllers\UserAccountController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +26,7 @@ use App\Http\Controllers\AdminHomeController;
 */
 
 Route::redirect('/', 'login');
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard',[AuthController::class,'dashboard'])->name('auth#dashboard');
@@ -108,9 +113,28 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/',[FeedbackController::class,'form'])->name('feedback#form');
             Route::post('send',[FeedbackController::class,'send'])->name('feedback#send');
         });
+
+        Route::group(['prefix'=>'post'],function(){
+            Route::get('/',[UserPostController::class,'home'])->name('user#postHome');
+            Route::post('create',[UserPostController::class,'create'])->name('user#postCreate');
+            Route::get('editPage/{id}',[UserPostController::class,'editPage'])->name('user#postEditPage');
+            Route::post('edit/{id}',[UserPostController::class,'edit'])->name('user#postEdit');
+            Route::get('delete',[PostController::class,'delete'])->name('post#delete');
+        });
+
+        Route::group(['prefix'=>'account'],function(){
+            Route::get('changPasswordPage',[UserAccountController::class,'changePasswordPage'])->name('user#changePasswordPage');
+            Route::post('changePassword',[UserAccountController::class,'changePassword'])->name('user#changePassword');
+            Route::get('informationPage',[UserAccountController::class,'informationPage'])->name('user#informationPage');
+            Route::get('updateAccountPage',[UserAccountController::class,'updateAccountPage'])->name('user#updateAccountPage');
+            Route::post('updateAccount/{id}',[UserAccountController::class,'updateAccount'])->name('user#updateAccount');
+        });
     });
 
 
-
-
 });
+
+
+Route::post('password/forgot',[UserController::class,'sendResetLink'])->name('forgot.password.link');
+Route::get('password/reset/{token}',[UserController::class,'showResetForm'])->name('reset.password.form');
+Route::post('password/reset',[UserController::class,'resetPassword'])->name('reset.password');

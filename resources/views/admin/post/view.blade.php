@@ -8,7 +8,7 @@
     <div class="main-content">
         <div class="section__content section__content--p30">
             <div class="container-fluid">
-                <div class="col-8 offset-2">
+                <div class="col-md-8 offset-lg-2">
                     <div class="card-box d-flex justify-content-center mb-4">
                         <div class="card shadow rounded border-0" style="width: 35rem">
                             <h5 class="card-title mt-3 fw-bold ms-3">
@@ -16,7 +16,11 @@
                             </h5>
                             <div class="d-flex align-items-center ms-3 mt-1 ">
                                 <div style="width: 55px; height: 55px; overflow: hidden;border-radius: 50%;">
-                                    <img class="w-100 h-100" style="object-fit: cover; object-position:center;" src="https://ui-avatars.com/api/?name={{$post->admin_name}}"/>
+                                    @if ($post->profile_image)
+                                    <img src="{{asset('storage/profileImages/'.$post->profile_image)}}" style="object-fit:cover;object-position:center;" class="w-100 h-100 rounded-circle card-img-top " alt="" />
+                                    @else
+                                    <img class="w-100 h-100 rounded-circle" style="object-fit: cover; object-position:center;" src="https://ui-avatars.com/api/?name={{$post->admin_name}}"/>
+                                    @endif
                                 </div>
                                 <div class="ms-2">
                                     <span style="font-size: 18px;" class="fw-semibold" >{{$post->admin_name}}</span><br>

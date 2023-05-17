@@ -11,7 +11,7 @@
                 <div class="col-md-12">
                     <!-- DATA TABLE -->
                     <div class="table-data__tool justify-content-evenly">
-                        <div class="table-data__tool-left">
+                        <div class="table-data__tool-left mb-3 mb-lg-0">
                             <form action="{{route('post#listPage')}}" method="get">
                                 <div class="input-group input-group-lg flex-nowrap shadow_2 rounded">
                                     <button type="submit" class="input-group-text btn" id="addon-wrapping"><i class="fa-regular fa-magnifying-glass fw-semibold text-primary"></i></button>
@@ -20,7 +20,7 @@
                             </form>
 
                         </div>
-                        <button type="button" class="btn btn-lg bg-white shadow_2">
+                        <button type="button" class="btn btn-lg bg-white shadow_2 mb-3 mb-lg-0">
                             <i class="fa-solid fa-newspaper me-2 text-primary fw-bold"></i> <span class="badge p-2 text-bg-primary">{{$post->total()}}</span>
                         </button>
                         <div class="dropdown">
@@ -44,23 +44,25 @@
                     <table class="table table-data2">
                         <thead>
                             <tr>
-                                <th class="fw-bold text-center" style="font-size: 16px">Id</th>
-                                <th class="fw-bold text-center" style="font-size: 16px">Topic</th>
-                                <th class="fw-bold text-center" style="font-size: 16px">Created Date</th>
-                                <th class="fw-bold text-center" style="font-size: 16px">Saved</th>
-                                <th class="fw-bold text-center" style="font-size: 16px">Content</th>
+                                <th class="fw-bold " style="font-size: 16px">Id</th>
+                                <th class="fw-bold " style="font-size: 16px">Name</th>
+                                <th class="fw-bold " style="font-size: 16px">Topic</th>
+                                <th class="fw-bold " style="font-size: 16px">Date</th>
+                                <th class="fw-bold " style="font-size: 16px">Saved</th>
+                                <th class="fw-bold " style="font-size: 16px">Content</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
                                 @foreach ($post as $p)
                                 <tr class="tr-shadow">
-                                    <td class="post-id text-center align-middle fw-semibold">{{$p->id}}</td>
-                                    <td class="text-center fw-semibold ">{{$p->topic_name}}</td>
-                                    <td class="text-center fw-semibold ">{{$p->created_at->format('F-j-Y')}}</td>
-                                    <td class="text-center fw-semibold "><i class="fa-solid fa-bookmark me-2"></i>{{$p->save_count}}</td>
-                                    <td class="text-center fw-semibold ">{{Str::words($p->desc,5,"....")}}</td>
-                                    <td class="text-center fw-semibold align-middle">
+                                    <td class="post-id  align-middle fw-semibold">{{$p->id}}</td>
+                                    <td class=" fw-semibold ">{{$p->admin_name}}</td>
+                                    <td class=" fw-semibold ">{{$p->topic_name}}</td>
+                                    <td class=" fw-semibold ">{{$p->created_at->format('F-j-Y')}}</td>
+                                    <td class=" fw-semibold "><i class="fa-solid fa-bookmark me-2"></i>{{$p->save_count}}</td>
+                                    <td class=" fw-semibold ">{{Str::words($p->desc,5,"....")}}</td>
+                                    <td class=" fw-semibold align-middle d-flex">
                                         <a href="{{route('post#view',$p->id)}}" class="btn btn-light shadow_2 me-2 bg-white"><i class="text-primary fa-solid fa-eye"></i></a>
                                         <a href="{{route('post#editPage',$p->id)}}" class="btn btn-light shadow_2 me-2 bg-white"><i class="text-primary fa-solid fa-pen-to-square"></i></a>
                                         <button class="btn btn-light shadow_2 bg-white btn-delete"><i class="text-primary fa-solid fa-trash"></i></button>

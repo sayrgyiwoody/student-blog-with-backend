@@ -11,7 +11,7 @@
                 <div class="col-md-12">
                     <!-- DATA TABLE -->
                     <div class="table-data__tool justify-content-evenly">
-                        <div class="table-data__tool-left">
+                        <div class="table-data__tool-left mb-3 mb-lg-0">
                             <form action="{{route('topic#listPage')}}" method="get">
                                 <div class="input-group input-group-lg flex-nowrap shadow_2 rounded">
                                     <button type="submit" class="input-group-text btn" id="addon-wrapping"><i class="fa-regular fa-magnifying-glass fw-semibold text-primary"></i></button>
@@ -20,7 +20,7 @@
                             </form>
 
                         </div>
-                        <button type="button" class="btn btn-lg bg-white shadow_2">
+                        <button type="button" class="btn btn-lg bg-white shadow_2  mb-3 mb-lg-0">
                             <i class="fa-solid fa-table-list me-2 text-primary fw-bold"></i> <span class="badge p-2 text-bg-primary">{{ $topic->total() }}</span>
                         </button>
                         <div class="dropdown">
@@ -31,40 +31,44 @@
                               <li><a class="dropdown-item" href="{{route('topic#listPage')}}">Newest first</a></li>
                               <li><a class="dropdown-item" href="{{route('topic#filterAsc')}}">Oldest first</a></li>
                             </ul>
-                          </div>
-                        <div class="table-data__tool-right">
+                        </div>
+                        <div class="table-data__tool-right  ">
                             <a href="{{route('topic#createPage')}}" class="shadow_2 btn btn-lg bg-white text-primary">
                                 <i class="fa-solid fa-plus me-2"></i> Create
                             </a>
                         </div>
                     </div>
                     @if (count($topic)!=0)
-                    <div class="table-responsive table-responsive-data2">
-                        <table class="table table-data2">
-                            <thead>
-                                <tr>
-                                    <th class="text-primary fw-bold text-center" style="font-size: 16px">Id</th>
-                                    <th class="text-primary fw-bold" style="font-size: 16px">Name</th>
-                                    <th class="text-primary fw-bold" style="font-size: 16px">Created Date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                    @foreach ($topic as $t)
-                                    <tr class="tr-shadow">
-                                        <td class="fw-semibold text-center">{{$t->id}}</td>
-                                        <td class="fw-semibold" style="width:30%">{{$t->name}}</td>
-                                        <td class="fw-semibold" style="width:30%">{{$t->created_at->format('F-j-Y')}}</td>
-                                        <td class="fw-semibold" style="width:20%">
-                                            <a href="{{route('topic#editPage',$t->id)}}" class="btn shadow_2 bg-white text-primary"><i class="fa-sharp fa-regular fa-pen-to-square"></i></a>
-                                            <button class="ms-2 btn shadow_2 btn-danger btn-delete"><i class=" fa-solid fa-trash"></i></button>
-                                        </td>
-                                        <input type="hidden" value="{{$t->id}}" class="topic-id">
-                                    </tr>
-                                    <tr class="spacer"></tr>
-                                    @endforeach
-                            </tbody>
+                    <div class="table-responsive">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th class="text-primary fw-bold text-center" style="font-size: 16px">Id</th>
+                              <th class="text-primary fw-bold text-center" style="font-size: 16px">Name</th>
+                              <th class="text-primary fw-bold text-center" style="font-size: 16px">Date</th>
+                              <th></th> <!-- empty header column for the delete/edit buttons on mobile -->
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @foreach ($topic as $t)
+                            <tr class="tr-shadow">
+                              <td class="fw-semibold text-center">{{$t->id}}</td>
+                              <td class="fw-semibold text-center" >{{$t->name}}</td>
+                              <td class="fw-semibold text-center" >{{$t->created_at->format('F-j-Y')}}</td>
+                              <td class="fw-semibold text-center" >
+                                <div class="d-flex flex-row justify-content-center justify-content-md-end align-items-center">
+                                  <a href="{{route('topic#editPage',$t->id)}}" class="btn shadow_2 bg-white text-primary me-2"><i class="fa-sharp fa-regular fa-pen-to-square"></i></a>
+                                  <button class="btn shadow_2 btn-danger btn-delete"><i class=" fa-solid fa-trash"></i></button>
+                                </div>
+                              </td>
+                              <input type="hidden" value="{{$t->id}}" class="topic-id">
+                            </tr>
+                            <tr class="spacer"></tr>
+                            @endforeach
+                          </tbody>
                         </table>
-                    </div>
+                      </div>
+
                     @else
                     <h3 class="text-primary text-center">There's no topic to show!<i class="fa-solid fa-face-frown-open ms-2"></i></h3>
                     @endif

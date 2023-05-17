@@ -47,13 +47,14 @@ class SavedController extends Controller
 
     //saved list page
     public function savedList() {
-        $posts = Saved::select('saveds.*','posts.*','topics.name as topic_name','users.gender as admin_gender','users.name as admin_name','users.image as profile_image')
+        $posts = Saved::select('saveds.*','users.role as role','posts.*','topics.name as topic_name','users.gender as admin_gender','users.name as admin_name','users.image as profile_image')
         ->leftJoin('posts','saveds.post_id','posts.id')
         ->leftJoin('users','posts.admin_id','users.id')
         ->leftJoin('topics','posts.topic_id','topics.id')
-        ->where('user_id',Auth::user()->id)->get();
+        ->orderBy('posts.created_at','desc')
+        ->where('user_id',Auth::user()->id)->paginate(3);
+
         $topics = Topic::get();
-        // dd($posts->toArray(),$topics->toArray());
         return view('user.saved',compact('posts','topics'));
     }
 }

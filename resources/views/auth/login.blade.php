@@ -10,6 +10,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,900&display=swap" rel="stylesheet">
+    <!-- Add SweetAlert CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.6/dist/sweetalert2.min.js"></script>
+
+    <!-- Add SweetAlert styles -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.6/dist/sweetalert2.min.css">
+
 </head>
 <body>
     <section class="form-container bg-light d-flex align-items-center justify-content-center" style="height: 100vh;">
@@ -21,8 +27,8 @@
                     </div>
                   </div>
                 <div class="col-sm-12 col-lg-7 px-5 py-4  p-lg-5">
-                    <div class="text-end fw-semibold">
-                    Do you have an account?<a href="{{ route('register') }}" class="ms-3 btn btn-sm btn-outline-primary fw-semibold ">Register</a>
+                    <div class="text-end d-flex align-items-center fw-semibold">
+                    <span>Do you have an account?</span><a href="{{ route('register') }}" class="ms-3 btn btn-sm btn-outline-primary fw-semibold ">Register</a>
                     </div>
                     <div class="mt-4 mt-lg-5  login-form-container">
                         <div class="mb-4">
@@ -46,7 +52,11 @@
                                     {{$message}}
                                 </span>
                                 @enderror
-                                <button type="submit" class="btn btn-lg btn-primary py-2 px-5 mt-3 mb-1 mt-lg-4 mb-lg-3">Login</button>
+                                <div class="d-flex align-items-center">
+                                    <button type="submit" class="me-3 btn btn-lg btn-primary py-2 px-5 mt-3 mb-1 mt-lg-4 mb-lg-3">Login</button>
+                                    <span><a href="{{route('password.request')}}">forget password?</a></span>
+                                </div>
+
                             </form>
                         </div>
                     </div>
@@ -56,3 +66,17 @@
     </section>
 </body>
 </html>
+
+
+@if (session('info'))
+
+        <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: '{{ session('info') }}',
+                showConfirmButton: true,
+            })
+        </script>
+
+@endif

@@ -14,36 +14,39 @@ class PostController extends Controller
 {
     //Direct post list page
     public function listPage() {
-        $post = Post::select('posts.*','topics.name as topic_name')
+        $post = Post::select('posts.*','users.name as admin_name','topics.name as topic_name')
         ->when(request('searchKey'),function($query){
             $query->orWhere('topics.name','like','%'.request('searchKey').'%')
             ->orWhere('posts.desc','like','%'.request('searchKey').'%');
         })
         ->leftJoin('topics','posts.topic_id','topics.id')
+        ->leftJoin('users','posts.admin_id','users.id')
         ->orderBy('posts.created_at','desc')->paginate(5);
         return view('admin.post.list',compact('post'));
     }
 
     //Filter Ascending
     public function filterAsc() {
-        $post = Post::select('posts.*','topics.name as topic_name')
+        $post = Post::select('posts.*','users.name as admin_name','topics.name as topic_name')
         ->when(request('searchKey'),function($query){
             $query->orWhere('topics.name','like','%'.request('searchKey').'%')
             ->orWhere('posts.desc','like','%'.request('searchKey').'%');
         })
         ->leftJoin('topics','posts.topic_id','topics.id')
+        ->leftJoin('users','posts.admin_id','users.id')
         ->orderBy('posts.created_at','asc')->paginate(5);
         return view('admin.post.list',compact('post'));
     }
 
     //filter most saved
     public function mostSaved() {
-        $post = Post::select('posts.*','topics.name as topic_name')
+        $post = Post::select('posts.*','users.name as admin_name','topics.name as topic_name')
         ->when(request('searchKey'),function($query){
             $query->orWhere('topics.name','like','%'.request('searchKey').'%')
             ->orWhere('posts.desc','like','%'.request('searchKey').'%');
         })
         ->leftJoin('topics','posts.topic_id','topics.id')
+        ->leftJoin('users','posts.admin_id','users.id')
         ->orderBy('posts.save_count','desc')->paginate(5);
         return view('admin.post.list',compact('post'));
     }

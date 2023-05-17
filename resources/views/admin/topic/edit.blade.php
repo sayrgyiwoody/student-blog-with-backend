@@ -8,7 +8,7 @@
     <div class="main-content">
         <div class="section__content section__content--p30">
             <div class="container-fluid">
-                <div class="col-md-6 offset-3 bg-white">
+                <div class="col-md-6 offset-lg-3 bg-white">
                     <h4 class="h4 text-center pt-3">Edit Topic</h4>
                     <hr>
                     <form action="{{route('topic#edit',$topic->id)}}" method="POST" class="px-4 py-2">
