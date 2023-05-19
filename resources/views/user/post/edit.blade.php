@@ -3,12 +3,13 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="col-md-6 offset-lg-3 bg-white">
-        <form action="{{route('user#postEdit',$post->id)}}" method="POST" class="px-4 py-3" enctype="multipart/form-data">
+    <div class="col-md-6 offset-lg-3 mt-4 border border-primary">
+        <form action="{{route('user#postEdit')}}" method="POST" class="px-4 py-3" enctype="multipart/form-data">
             @csrf
             <label for="name" class="form-label fw-semibold">Name</label>
-            <input name="" type="text" class="form-control" readonly disabled value="{{$post->admin_name}}">
+            <input name="" type="text" class="form-control" readonly disabled value="{{Auth::user()->name}}">
             <input type="hidden" name="adminId" value="{{$post->admin_id}}">
+            <input type="hidden" name="postId" value="{{$post->id}}">
             <label for="topicId" class="form-label fw-semibold mt-3">Topic</label>
             <select name="topicId"  class="form-select @error('topicId') is-invalid @enderror">
                 <option value="">Choose topic</option>

@@ -6,7 +6,9 @@ use Carbon\Carbon;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Saved;
+use App\Models\AdminAprrove;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -61,11 +63,11 @@ class AdminController extends Controller
             $dbImage = User::select('image')->where('id',$id)->first();
             $dbImage =$dbImage->image;
             if($dbImage!=null) {
-                Storage::delete('public/profileImages/'.$dbImage);
+                Storage::delete('public/'.$dbImage);
             }
             $imageName = uniqid() . $request->file('image')->getClientOriginalName();
             $data['image'] = $imageName;
-            $request->file('image')->storeAs('public/profileImages/',$imageName);
+            $request->file('image')->storeAs('public/',$imageName);
         }
         User::where('id',$id)->update($data);
         return redirect()->route('admin#informationPage')->with(['updateAlert' => 'Admin information updated.']);
@@ -78,7 +80,8 @@ class AdminController extends Controller
                   ->where('role','admin');
         })
         ->where('role','admin')
-        ->paginate(4);
+        ->orderBy('created_at','desc')
+        ->paginate(5);
         return view('admin.account.adminList',compact('accounts'));
 
     }
@@ -90,8 +93,19 @@ class AdminController extends Controller
                 ->where('role','user');
         })
         ->where('role','user')
-        ->paginate(4);
-        return view('admin.account.userList',compact('accounts'));
+        ->orderBy('created_at','desc')
+        ->paginate(5);
+
+        $approveStatus = [];
+        foreach($accounts as $account) {
+            $status = DB::table('admin_aprroves')->where('user_id', $account->id)
+            ->where('email', $account->email)
+            ->first();
+
+            $approveStatus[$account->id] = $status;
+        }
+        // dd($approveStatus);
+        return view('admin.account.userList',compact('accounts','approveStatus'));
 
     }
 
@@ -139,4 +153,9 @@ class AdminController extends Controller
         Saved::where('user_id',$request->account_id)->delete();
         return response()->json(200);
     }
-}
+
+    public function approve($id) {
+        DB::table('admin_aprroves')->where('user_id',$id)->update(['status'=>'1']);
+        return back()->with(['adminRoleChangeAlert' => 'User approved.']);
+    }
+ }

@@ -10,8 +10,9 @@
                     <h3 class="text-center title-2 "><strong>Update Information</strong></h3>
                 </div>
                 <hr>
-                <form action="{{route('user#updateAccount',Auth::user()->id)}}" method="post" novalidate="novalidate" enctype="multipart/form-data">
+                <form action="{{route('user#updateAccount')}}" method="post" novalidate="novalidate" enctype="multipart/form-data">
                     @csrf
+                    <input type="hidden" name="id" value="{{Auth::user()->id}}">
                     <div class="form-group mt-3">
                         <div class="row ">
                             <div class="col-lg-6">
@@ -19,7 +20,7 @@
                                     @if (Auth::user()->image)
                                     <img src="{{asset('storage/profileImages/'.Auth::user()->image)}}" style="object-fit:cover;object-position:center;" class="w-100 h-100 img-thumbnail card-img-top " alt="" />
                                     @else
-                                    <img class="w-100 h-100 img-thumbnail" style="object-fit: cover; object-position:center;" src="https://ui-avatars.com/api/?name={{$Auth::user()->name}}"/>
+                                    <img class="w-100 h-100 img-thumbnail" style="object-fit: cover; object-position:center;" src="https://ui-avatars.com/api/?name={{Auth::user()->name}}"/>
                                     @endif
                                 </div>
                                 <input type="file" name="image" class="form-control mt-3" >

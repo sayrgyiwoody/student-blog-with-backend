@@ -49,7 +49,13 @@
                             <i class="fa-solid fa-ellipsis"></i>
                         </button>
                         <ul class="dropdown-menu">
-                          <li><a class="dropdown-item" href="{{route('user#postEditPage',$post->id)}}">Edit</a></li>
+                          <li>
+                            <form action="{{ route('user#postEditPage') }}" method="POST" style="display: inline;">
+                                @csrf <!-- Include a CSRF token for security, if required by your framework -->
+                                <input type="hidden" name="id" value="{{$post->id}}">
+                                <button type="submit" class="dropdown-item">Edit</button>
+                            </form>
+                          </li>
                           <li><button class="dropdown-item btn-delete" >Delete</button></li>
                         </ul>
                       </div>

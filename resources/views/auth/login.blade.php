@@ -74,8 +74,23 @@
             Swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: '{{ session('info') }}',
+                text: '{{ session('info') }}',
                 showConfirmButton: true,
+            })
+        </script>
+
+@endif
+
+@if (session('reject'))
+
+        <script>
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Oops...',
+                text: '{{ session('reject') }}',
+                showConfirmButton: true,
+                confirmButtonText: 'hok hok',
             })
         </script>
 

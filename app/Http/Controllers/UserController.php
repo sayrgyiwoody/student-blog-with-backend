@@ -72,7 +72,7 @@ class UserController extends Controller
 
     //Filter with Topic
     public function topicFilter($topicId) {
-        $posts = Post::select('posts.*','users.gender as admin_gender','users.name as admin_name','users.image as profile_image','topics.name as topic_name')
+        $posts = Post::select('posts.*','users.role as role','users.gender as admin_gender','users.name as admin_name','users.image as profile_image','topics.name as topic_name')
         ->leftJoin('users','posts.admin_id','users.id')
         ->leftJoin('topics','posts.topic_id','topics.id')
         ->orderBy('created_at','desc')->where('topic_id',$topicId)->paginate(10);

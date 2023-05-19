@@ -20,7 +20,7 @@
             </div>
 
         </div>
-        <div class="col-lg-7  pt-2 bg-card" style="height: 92vh; overflow-y: scroll;">
+        <div class="col-lg-7  pt-4 bg-card" style="height: 92vh; overflow-y: scroll;">
            @if (count($posts) != 0)
            @foreach ($posts as $post )
            <div class="card-box d-flex justify-content-center mb-4">
@@ -35,7 +35,7 @@
                    <div class="d-flex align-items-center ms-3 mt-1 ">
                        <div style="width: 55px; height: 55px; overflow: hidden;">
                         @if ($post->profile_image)
-                        <img src="{{asset('storage/profileImages/'.$post->profile_image)}}" style="object-fit:cover;object-position:center;" class="w-100 h-100 rounded-circle card-img-top " alt="" />
+                        <img src="{{asset('storage/'.$post->profile_image)}}" style="object-fit:cover;object-position:center;" class="w-100 h-100 rounded-circle card-img-top " alt="" />
                         @else
                         <img class="w-100 h-100 rounded-circle" style="object-fit: cover; object-position:center;" src="https://ui-avatars.com/api/?name={{$post->admin_name}}"/>
                         @endif
@@ -115,7 +115,7 @@
             Swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: '{{ session('info') }}',
+                text: '{{ session('info') }}',
                 showConfirmButton: true,
             })
         </script>

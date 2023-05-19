@@ -29,12 +29,12 @@
 
 </head>
 
-<body class="body">
+<body class="body pt-5">
     <!-- Navbar Start -->
-    <div class="container bg-dark">
+    <div class="container bg-dark ">
         <div class="row">
             <div class="col">
-                <nav class="navbar navbar-dark navbar-expand-lg bg-dark ">
+                <nav class="navbar navbar-dark navbar-expand-lg bg-dark fixed-top">
                     <div class="container">
                       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -75,7 +75,7 @@
                           <input  name="searchKey" value="{{request('searchKey')}}"  class="form-control me-2" type="search" placeholder="Search for content" aria-label="Search">
                           <button class="btn btn-outline-primary" type="submit">Search</button>
                         </form>
-                        <div class="btn-group  mt-3 mt-lg-0">
+                        <div class="btn-group  mt-3 mb-2 mt-lg-0">
                             <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                 {{Auth::user()->name}}
                             </button>
@@ -161,6 +161,8 @@
 
 
         </script>
+
+        <script src="{{asset('user/js/main.js')}}"></script>
 </body>
 
 </html>

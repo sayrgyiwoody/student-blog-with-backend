@@ -49,7 +49,7 @@
                               <th></th> <!-- empty header column for the delete/edit buttons on mobile -->
                             </tr>
                           </thead>
-                          <tbody>
+                          <tbody class="bg-white">
                             @foreach ($topic as $t)
                             <tr class="tr-shadow">
                               <td class="fw-semibold text-center">{{$t->id}}</td>
@@ -63,7 +63,7 @@
                               </td>
                               <input type="hidden" value="{{$t->id}}" class="topic-id">
                             </tr>
-                            <tr class="spacer"></tr>
+                            <tr class="spacer" style="height:6px"></tr>
                             @endforeach
                           </tbody>
                         </table>

@@ -118,7 +118,11 @@
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
                                         <div class="image">
-                                            <img class="" src="https://ui-avatars.com/api/?name={{Auth::user()->name}}"  />
+                                            @if (Auth::user()->image)
+                                                <img src="{{asset('storage/'.Auth::user()->image)}}" style="object-fit:cover;object-position:center;" class="w-100 h-100 img-thumbnail card-img-top " alt="" />
+                                                @else
+                                                <img class="w-100 h-100 img-thumbnail" style="object-fit: cover; object-position:center;" src="https://ui-avatars.com/api/?name={{Auth::user()->name}}"/>
+                                                @endif
                                         </div>
                                         <div class="content">
                                             <a class="js-acc-btn" href="#">{{Auth::user()->name}}</a>
@@ -126,7 +130,11 @@
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
                                                 <div class="image">
-                                                    <img class="" src="https://ui-avatars.com/api/?name={{Auth::user()->name}}"  />
+                                                    @if (Auth::user()->image)
+                                                <img src="{{asset('storage/'.Auth::user()->image)}}" style="object-fit:cover;object-position:center;" class="w-100 h-100 img-thumbnail card-img-top " alt="" />
+                                                @else
+                                                <img class="w-100 h-100 img-thumbnail" style="object-fit: cover; object-position:center;" src="https://ui-avatars.com/api/?name={{Auth::user()->name}}"/>
+                                                @endif
                                                 </div>
                                                 <div class="content">
                                                     <h5 class="name">

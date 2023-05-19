@@ -44,12 +44,12 @@
                     <table class="table table-data2">
                         <thead>
                             <tr>
-                                <th class="fw-bold " style="font-size: 16px">Id</th>
-                                <th class="fw-bold " style="font-size: 16px">Name</th>
-                                <th class="fw-bold " style="font-size: 16px">Topic</th>
-                                <th class="fw-bold " style="font-size: 16px">Date</th>
-                                <th class="fw-bold " style="font-size: 16px">Saved</th>
-                                <th class="fw-bold " style="font-size: 16px">Content</th>
+                                <th class="fw-boldc text-primary " style="font-size: 16px">Id</th>
+                                <th class="fw-bold text-primary" style="font-size: 16px">Name</th>
+                                <th class="fw-bold text-primary" style="font-size: 16px">Topic</th>
+                                <th class="fw-bold text-primary" style="font-size: 16px">Date</th>
+                                <th class="fw-bold text-primary" style="font-size: 16px">Saved</th>
+                                <th class="fw-bold text-primary" style="font-size: 16px">Content</th>
                                 <th></th>
                             </tr>
                         </thead>

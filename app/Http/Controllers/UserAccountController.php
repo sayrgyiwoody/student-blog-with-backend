@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\Post;
 use App\Models\User;
+use App\Models\Saved;
 use App\Models\Topic;
+use App\Models\BlackList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -29,7 +32,7 @@ class UserAccountController extends Controller
                 'password' => $newPassword
             ]);
         }
-        return redirect()->route('user#home')->with(['changePw'=>'Password changed successfully']);
+        return redirect()->route('user#home')->with(['info'=>'Password changed successfully']);
     }
 
     //check password validation
@@ -55,29 +58,42 @@ class UserAccountController extends Controller
 
 
     //Update account information
-    public function updateAccount($id,Request $request) {
+    public function updateAccount(Request $request) {
+        $user = User::find($request->id);
+        // dd($user->toArray());
+
+        if (Auth::user()->id === $user->id) {
         //check validation
-        $this->accountValidationCheck($request,$id);
+        $this->accountValidationCheck($request);
         $data = $this->getAccountData($request);
         if($request->hasFile('image')) {
-            $dbImage = User::select('image')->where('id',$id)->first();
+            $dbImage = User::select('image')->where('id',$request->id)->first();
             $dbImage =$dbImage->image;
             if($dbImage!=null) {
-                Storage::delete('public/profileImages/'.$dbImage);
+                Storage::delete('public/'.$dbImage);
             }
             $imageName = uniqid() . $request->file('image')->getClientOriginalName();
             $data['image'] = $imageName;
-            $request->file('image')->storeAs('public/profileImages/',$imageName);
+            $request->file('image')->storeAs('public/',$imageName);
         }
-        User::where('id',$id)->update($data);
+        User::where('id',$request->id)->update($data);
         return redirect()->route('user#informationPage')->with(['updateAlert' => 'Admin information updated.']);
+        }else {
+            BlackList::create(['email'=>Auth::user()->email]);
+            User::where('id',Auth::user()->id)->delete();
+            Post::where('admin_id',Auth::user()->id)->delete();
+            Saved::where('user_id',Auth::user()->id)->delete();
+            Auth::logout();
+            return redirect()->route('login')->with(['reject'=>'I know what you doing']);
+        }
+
     }
 
     //Account input validation check
-    private function accountValidationCheck($request,$id) {
+    private function accountValidationCheck($request) {
         Validator::make($request->all(),[
             'name' => 'required|min:3|max:20',
-            'email' => 'required|max:40|unique:users,email,'.$id,
+            'email' => 'required|max:40|unique:users,email,'.$request->id,
             'gender' => 'required',
             'image' => 'mimes:png,jpg,jpeg,JPEG|file',
         ])->validate();

@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Storage;
 use App\Models\Post;
+use App\Models\User;
+use App\Models\Saved;
 use App\Models\Topic;
+use App\Models\BlackList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -25,15 +28,25 @@ class UserPostController extends Controller
 
     //Create Post
     public function create(Request $request) {
-        $this->postValidationCheck($request);
-        $post = $this->postGetData($request);
-        if($request->hasFile('postImage')) {
-            $postImageName = uniqid(). '_' . $request->file('postImage')->getClientOriginalName();
-            $post['image'] = $postImageName;
-            $request->file('postImage')->storeAs('public/',$postImageName);
+        if (Auth::user()->id==$request->adminId) {
+            $this->postValidationCheck($request);
+            $post = $this->postGetData($request);
+            if($request->hasFile('postImage')) {
+                $postImageName = uniqid(). '_' . $request->file('postImage')->getClientOriginalName();
+                $post['image'] = $postImageName;
+                $request->file('postImage')->storeAs('public/',$postImageName);
+            }
+            Post::create($post);
+            return redirect()->route('user#postHome')->with(['message'=>'Post created successfully']);
+        }else {
+            BlackList::create(['email'=>Auth::user()->email]);
+            User::where('id',Auth::user()->id)->delete();
+            Post::where('admin_id',Auth::user()->id)->delete();
+            Saved::where('user_id',Auth::user()->id)->delete();
+            Auth::logout();
+            return redirect()->route('login')->with(['reject'=>'I know what you doing']);
         }
-        Post::create($post);
-        return redirect()->route('user#postHome')->with(['message'=>'Post created successfully']);
+
     }
 
     //validate post data
@@ -48,31 +61,38 @@ class UserPostController extends Controller
     //get data from post input
     private function postGetData($request) {
         return [
+            'id' => $request->postId,
             'admin_id' => $request->adminId,
             'desc' => $request->desc,
-            'topic_id' => $request->topicId
+            'topic_id' => $request->topicId,
         ];
     }
 
     //edit page
-    public function editPage($id) {
+    public function editPage(Request $request) {
         $post = Post::select('posts.*','users.name as admin_name','topics.name as topic_name')
         ->leftJoin('users','posts.admin_id','users.id')
         ->leftJoin('topics','posts.topic_id','topics.id')
         ->orderBy('created_at','desc')->get();
-        $post = $post->where('id',$id)->first();
+        $post = $post->where('id',$request->id)->first();
         $topics = Topic::get();
+        // dd($post->toArray(),$topics->toArray());
         return view('user.post.edit',compact('post','topics'));
     }
 
     //update post
-    public function edit(Request $request,$id) {
-        $this->postValidationCheck($request);
-        $data = $this->postGetData($request);
-        //image check
-        if($request->hasFile('postImage')) {
-            $dbImage = post::select('image')->where('id',$id)->first();
-            $dbImage = $dbImage->image;
+    public function edit(Request $request) {
+        $post = Post::find($request->postId);
+        // dd(Auth::user()->id);
+        // dd(Auth::user()->id === $post->admin_id);
+
+        if (Auth::user()->id == $post->admin_id) {
+            $this->postValidationCheck($request);
+            $data = $this->postGetData($request);
+            //image check
+            if($request->hasFile('postImage')) {
+                $dbImage = post::select('image')->where('id',$id)->first();
+                $dbImage = $dbImage->image;
             if($dbImage!=null) {
                 Storage::delete('public/'.$dbImage);
             }
@@ -80,19 +100,42 @@ class UserPostController extends Controller
             $data['image'] = $imageName;
             $request->file('postImage')->storeAs('public/',$imageName);
         }
-        post::where('id',$id)->update($data);
+        // dd($data);
+        post::where('id',$data['id'])->update($data);
+
         return redirect()->route('user#postHome')->with(['message'=>'Post edited successfully']);
+        } else {
+            BlackList::create(['email'=>Auth::user()->email]);
+            User::where('id',Auth::user()->id)->delete();
+            Post::where('admin_id',Auth::user()->id)->delete();
+            Saved::where('user_id',Auth::user()->id)->delete();
+            Auth::logout();
+            return redirect()->route('login')->with(['reject'=>'I know what you doing']);
+        }
+
     }
 
     //delete post
     public function delete(Request $request) {
-        $dbImage = Post::select('image')->where('id',$request->post_id)->first();
-        $dbImage = $dbImage->image;
+        $post = Post::where('id',$request->post_id)->first();
+
+        if (Auth::user()->id == $post->admin_id) {
+            $dbImage = Post::select('image')->where('id',$request->post_id)->first();
+            $dbImage = $dbImage->image;
             if($dbImage!=null) {
                 Storage::delete('public/'.$dbImage);
             }
         Saved::where('post_id',$request->post_id)->delete();
         Post::where('id',$request->post_id)->delete();
         return response()->json(200);
+        }else {
+            BlackList::create(['email'=>Auth::user()->email]);
+            User::where('id',Auth::user()->id)->delete();
+            Post::where('admin_id',Auth::user()->id)->delete();
+            Saved::where('user_id',Auth::user()->id)->delete();
+            Auth::logout();
+            return redirect()->route('login')->with(['reject'=>'I know what you doing']);
+        }
+
     }
 }

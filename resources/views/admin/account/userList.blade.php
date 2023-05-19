@@ -32,7 +32,7 @@
                                 Swal.fire({
                                 position: 'center',
                                 icon: 'success',
-                                title: '{{session('adminRoleChangeAlert')}}',
+                                text: '{{session('adminRoleChangeAlert')}}',
                                 showConfirmButton: true,
                                 // timer: 1500
                                 }).then((result) => {
@@ -53,6 +53,7 @@
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Gender</th>
+                                    <th>Approve Status</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -67,8 +68,14 @@
                                 <td class="align-middle">{{$account->name}}</td>
                                 <td class="align-middle">{{$account->email}}</td>
                                 <td class="align-middle">{{$account->gender}}</td>
+                                <td class="align-middle">{{$approveStatus[$account->id]->status}}</td>
                                 <td class="align-middle">
                                     <div class="table-data-feature">
+                                        <a href="{{route('admin#approve',$account->id)}}">
+                                            <button class="btn btn-white  rounded-0 me-2 shadow_2 " >
+                                                <i class="fa-solid fa-check" style="color: #262626"></i>
+                                            </button>
+                                        </a>
                                         <a href="{{route('admin#changeAdminRole',$account->id)}}">
                                             <button class="btn btn-white  rounded-0 me-2 shadow_2 " >
                                                 <i class="fa-solid fa-shield-halved" style="color: #262626"></i>

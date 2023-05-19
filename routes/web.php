@@ -28,8 +28,14 @@ use App\Http\Controllers\UserAccountController;
 Route::redirect('/', 'login');
 
 
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard',[AuthController::class,'dashboard'])->name('auth#dashboard');
+    Route::get('/adminApprove',[AuthController::class,'adminApprovePage'])->name('auth#adminApprovePage');
+    Route::post('/approveRequest',[AuthController::class,'approveRequest'])->name('auth#approveRequest');
+    Route::post('/sendCode',[AuthController::class,'sendCode'])->name('auth#sendCode');
+    Route::get('checkCodePage',[AuthController::class,'checkCodePage'])->name('auth#checkCodePage');
+    Route::post('/verifyCode',[AuthController::class,'checkCode'])->name('auth#checkCode');
 
     //Admin
     Route::group(['prefix'=>'admin','middleware'=>'admin_auth'],function() {
@@ -52,6 +58,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('change/userRole/{id}',[AdminController::class,'changeUserRole'])->name('admin#changeUserRole');
             Route::get('user/list',[AdminController::class,'userList'])->name('admin#userAccountList');
             Route::get('change/adminRole/{id}',[AdminController::class,'changeAdminRole'])->name('admin#changeAdminRole');
+            Route::get('approve/{id}',[AdminController::class,'approve'])->name('admin#approve');
         });
 
         //Topic
@@ -90,7 +97,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     //User
-    Route::group(['prefix'=>'user','middleware'=>'user_auth'],function() {
+    Route::group(['prefix'=>'user','middleware' => ['user_auth', 'verfiy_auth']],function() {
         //direct home page
         // Route::get('home',function() {
         //     return view('user.home');
@@ -117,9 +124,9 @@ Route::middleware(['auth'])->group(function () {
         Route::group(['prefix'=>'post'],function(){
             Route::get('/',[UserPostController::class,'home'])->name('user#postHome');
             Route::post('create',[UserPostController::class,'create'])->name('user#postCreate');
-            Route::get('editPage/{id}',[UserPostController::class,'editPage'])->name('user#postEditPage');
-            Route::post('edit/{id}',[UserPostController::class,'edit'])->name('user#postEdit');
-            Route::get('delete',[PostController::class,'delete'])->name('post#delete');
+            Route::post('editPage',[UserPostController::class,'editPage'])->name('user#postEditPage');
+            Route::post('edit',[UserPostController::class,'edit'])->name('user#postEdit');
+            Route::get('delete',[UserPostController::class,'delete'])->name('post#delete');
         });
 
         Route::group(['prefix'=>'account'],function(){
@@ -127,7 +134,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('changePassword',[UserAccountController::class,'changePassword'])->name('user#changePassword');
             Route::get('informationPage',[UserAccountController::class,'informationPage'])->name('user#informationPage');
             Route::get('updateAccountPage',[UserAccountController::class,'updateAccountPage'])->name('user#updateAccountPage');
-            Route::post('updateAccount/{id}',[UserAccountController::class,'updateAccount'])->name('user#updateAccount');
+            Route::post('updateAccount',[UserAccountController::class,'updateAccount'])->name('user#updateAccount');
         });
     });
 

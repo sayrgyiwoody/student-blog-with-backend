@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="row">
-        <div class="col-lg-8 offset-lg-2 pt-2 bg-card pt-lg-5" style="height: 92vh; overflow-y: scroll;">
+        <div class="col-lg-8 offset-lg-2 pt-4 bg-card pt-lg-5" style="height: 92vh; overflow-y: scroll;">
             <div class="card-box d-flex justify-content-center mb-4 mb-lg-5">
                 <div class="card shadow rounded border-0" style="width: 40rem">
                     <h5 class="card-title mt-3 fw-bold ms-3 d-flex justify-content-between align-items-center">
@@ -13,7 +13,7 @@
                     <div class="d-flex align-items-center ms-3 mt-1 ">
                         <div style="width: 55px; height: 55px; overflow: hidden;border-radius: 50%;">
                             @if ($post->profile_image)
-                            <img src="{{asset('storage/profileImages/'.$post->profile_image)}}" style="object-fit:cover;object-position:center;" class="w-100 h-100 rounded-circle card-img-top " alt="" />
+                            <img src="{{asset('storage/'.$post->profile_image)}}" style="object-fit:cover;object-position:center;" class="w-100 h-100 rounded-circle card-img-top " alt="" />
                             @else
                             <img class="w-100 h-100 rounded-circle" style="object-fit: cover; object-position:center;" src="https://ui-avatars.com/api/?name={{$post->admin_name}}"/>
                             @endif

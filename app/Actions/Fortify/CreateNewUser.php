@@ -3,10 +3,11 @@
 namespace App\Actions\Fortify;
 
 use App\Models\User;
+use App\Models\BlackList;
+use Laravel\Jetstream\Jetstream;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
-use Laravel\Jetstream\Jetstream;
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -19,6 +20,7 @@ class CreateNewUser implements CreatesNewUsers
      */
     public function create(array $input): User
     {
+
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -26,12 +28,16 @@ class CreateNewUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
+        $blacklisted = BlackList::where('email', $input['email'])->exists();
 
-        return User::create([
-            'name' => $input['name'],
-            'email' => $input['email'],
-            'gender' => $input['gender'],
-            'password' => Hash::make($input['password']),
-        ]);
+        if (!$blacklisted) {
+            return User::create([
+                'name' => $input['name'],
+                'email' => $input['email'],
+                'gender' => $input['gender'],
+                'password' => Hash::make($input['password']),
+            ]);
+        }
+
     }
 }

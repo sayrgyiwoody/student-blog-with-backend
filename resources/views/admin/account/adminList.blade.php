@@ -94,7 +94,7 @@
             Swal.fire({
             position: 'center',
             icon: 'success',
-            title: '{{session('adminRoleChangeAlert')}}',
+            text: '{{session('adminRoleChangeAlert')}}',
             showConfirmButton: true,
             // timer: 1500
             }).then((result) => {
