@@ -42,8 +42,11 @@
                       <div class="form-check form-switch mx-auto">
                         <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
                       </div>
-                      <div class="btn bg-dark text-primary me-3 darkmode-icon " disabled><i class="bi bi-sun-fill"></i></div>
-                      <a class="navbar-brand fw-semibold text-light" href="#">UCSY</a>
+                      <div class="btn bg-dark text-primary me-5 darkmode-icon " disabled><i class="bi bi-sun-fill"></i></div>
+                      <a class="navbar-brand fw-semibold text-light" href="#">
+                        <img src="{{asset('images/logo_dark.png')}}" style="width: 60px;">
+                      </a>
+
                       <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
                         <ul class="navbar-nav me-auto mx-lg-auto mb-2 mb-lg-0 ms-0">
                           <li class="nav-item">
