@@ -21,10 +21,9 @@
                     </div>
                   </div>
                 <div class="col-12 col-lg-7 py-4 px-5 py-lg-3">
-                    <div class="text-end fw-semibold mt-1">
-                    Already have an account?<a href="{{ route('login') }}" class="ms-3 btn btn-outline-primary fw-semibold ">Login</a>
+                    <div class="text-end d-flex align-items-center fw-semibold">
+                        <span>Already have account?</span><a href="{{ route('login') }}" class="ms-3 btn btn-sm btn-outline-primary fw-semibold ">Login</a>
                     </div>
-
                         <div class="">
                             <form  method="POST" action="{{route('register')}}" class="pt-2 register-form-container">
                                 @csrf

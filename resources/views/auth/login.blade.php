@@ -28,7 +28,7 @@
                   </div>
                 <div class="col-sm-12 col-lg-7 px-5 py-4  p-lg-5">
                     <div class="text-end d-flex align-items-center fw-semibold">
-                    <span>Do you have an account?</span><a href="{{ route('register') }}" class="ms-3 btn btn-sm btn-outline-primary fw-semibold ">Register</a>
+                    <span>Do not have an account?</span><a href="{{ route('register') }}" class="ms-3 btn btn-sm btn-outline-primary fw-semibold ">Register</a>
                     </div>
                     <div class="mt-4 mt-lg-5  login-form-container">
                         <div class="mb-4">
@@ -54,7 +54,8 @@
                                 @enderror
                                 <div class="d-flex align-items-center">
                                     <button type="submit" class="me-3 btn btn-lg btn-primary py-2 px-5 mt-3 mb-1 mt-lg-4 mb-lg-3">Login</button>
-                                    <span><a href="{{route('password.request')}}">forget password?</a></span>
+                                    <a href="{{route('password.request')}}">forget?</a>
+
                                 </div>
 
                             </form>

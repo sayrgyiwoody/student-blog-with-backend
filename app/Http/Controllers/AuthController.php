@@ -21,10 +21,7 @@ class AuthController extends Controller
         }
         if (Auth::user()->role == 'user') {
             if (Auth::check() && Auth::user()->email_verified_at === null) {
-                $exists = AdminAprrove::where('user_id',Auth::user()->id)->exists();
-                if(!$exists) {
-                    AdminAprrove::create(['user_id'=>Auth::user()->id,'email'=> Auth::user()->email]);
-                }
+
                 return redirect()->route('auth#adminApprovePage');
             }
             return redirect()->route('user#home');
@@ -39,7 +36,11 @@ class AuthController extends Controller
 
     public function approveRequest() {
         $status = AdminAprrove::where('user_id',Auth::user()->id)->first();
-        if($status->status != '1' ) {
+        if($status == null) {
+            AdminAprrove::create(['user_id' => Auth::user()->id, 'email' => Auth::user()->email]);
+            return back()->with(['message'=>'You are not still approved by admin. Wait for admin approve.']);
+        }
+        if($status->status != '1') {
             return back()->with(['message'=>'You are not still approved by admin. Wait for admin approve.']);
         }
 

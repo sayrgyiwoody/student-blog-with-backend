@@ -21,13 +21,20 @@ class CreateNewUser implements CreatesNewUsers
     public function create(array $input): User
     {
 
-        Validator::make($input, [
+        $validator = Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users', function ($attribute, $value, $fail) {
+                // Check if the email domain is "ucsy.edu.mm"
+                if (strpos($value, '@ucsy.edu.mm') === false) {
+                    $fail('The '.$attribute.' must be a valid email from UCSY.');
+                }
+            }],
             'gender' => 'required',
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
-        ])->validate();
+        ]);
+
+        $validator->validate();
         $blacklisted = BlackList::where('email', $input['email'])->exists();
 
         if (!$blacklisted) {
@@ -38,6 +45,5 @@ class CreateNewUser implements CreatesNewUsers
                 'password' => Hash::make($input['password']),
             ]);
         }
-
     }
 }
