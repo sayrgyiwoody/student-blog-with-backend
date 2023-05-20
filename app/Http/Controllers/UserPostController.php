@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use Storage;
+use Carbon\Carbon;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Saved;
 use App\Models\Topic;
 use App\Models\BlackList;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -36,8 +38,17 @@ class UserPostController extends Controller
                 $post['image'] = $postImageName;
                 $request->file('postImage')->storeAs('public/',$postImageName);
             }
-            Post::create($post);
+            $currentDate = Carbon::now()->format('Y-m-d');
+            $maxPostsPerDay = 5;
+            $postCount = Post::where('admin_id', Auth::user()->id)
+            ->whereDate('created_at', $currentDate)
+            ->count();
+            if ($postCount >= $maxPostsPerDay) {
+                return back()->with(['error'=>'Maximum posts reached for today']);
+            }elseif($postCount < $maxPostsPerDay) {
+                Post::create($post);
             return redirect()->route('user#postHome')->with(['message'=>'Post created successfully']);
+            }
         }else {
             BlackList::create(['email'=>Auth::user()->email]);
             User::where('id',Auth::user()->id)->delete();

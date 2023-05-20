@@ -63,7 +63,7 @@
                    <div class="d-flex align-items-center ms-3 mt-1 ">
                        <div style="width: 55px; height: 55px; overflow: hidden;border-radius: 50%;">
                         @if ($post->profile_image)
-                            <img src="{{asset('storage/profileImages/'.$post->profile_image)}}" style="object-fit:cover;object-position:center;" class="w-100 h-100 rounded-circle card-img-top " alt="" />
+                            <img src="{{asset('storage/'.$post->profile_image)}}" style="object-fit:cover;object-position:center;" class="w-100 h-100 rounded-circle card-img-top " alt="" />
                         @else
                             <img class="w-100 h-100 rounded-circle" style="object-fit: cover; object-position:center;" src="https://ui-avatars.com/api/?name={{$post->admin_name}}"/>
                         @endif
@@ -122,6 +122,23 @@
 
 @endif
 
+@if (session('error'))
+
+    @section('scriptSource')
+        <script>
+            Swal.fire({
+                icon : 'error',
+                text: '{{ session('error') }}',
+                showConfirmButton: true,
+            }).then((result) => {
+                if(result.isConfirmed) {
+                location.reload();
+                }
+            })
+        </script>
+    @endsection
+
+@endif
 
 
 @endsection
