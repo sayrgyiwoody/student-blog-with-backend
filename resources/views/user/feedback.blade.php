@@ -6,7 +6,7 @@
     <div class="row pt-lg-5">
         <div class="mt-lg-5 col-12 col-lg-8 offset-lg-2  contact-form px-5 py-4 rounded ">
             <div class="container-lg">
-                <div class="row mb-4">
+                <div class="row my-4">
                     <h3 class="text-center">Feedback Form</h3>
                 </div>
               <div class="row">

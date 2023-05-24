@@ -38,10 +38,10 @@ class AuthController extends Controller
         $status = AdminAprrove::where('user_id',Auth::user()->id)->first();
         if($status == null) {
             AdminAprrove::create(['user_id' => Auth::user()->id, 'email' => Auth::user()->email]);
-            return back()->with(['message'=>'You are not still approved by admin. Wait for admin approve.']);
+            return back()->with(['message'=>'Request sent to admin. Wait for admin approve.']);
         }
         if($status->status != '1') {
-            return back()->with(['message'=>'You are not still approved by admin. Wait for admin approve.']);
+            return back()->with(['message'=>'Request sent to admin. Wait for admin approve.']);
         }
 
         return view('send-email');

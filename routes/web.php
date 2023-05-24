@@ -13,6 +13,7 @@ use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\UserPostController;
 use App\Http\Controllers\AdminHomeController;
 use App\Http\Controllers\UserAccountController;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -124,7 +125,7 @@ Route::middleware(['auth'])->group(function () {
         Route::group(['prefix'=>'post'],function(){
             Route::get('/',[UserPostController::class,'home'])->name('user#postHome');
             Route::post('create',[UserPostController::class,'create'])->name('user#postCreate');
-            Route::post('editPage',[UserPostController::class,'editPage'])->name('user#postEditPage');
+            Route::get('editPage/{id}',[UserPostController::class,'editPage'])->name('user#postEditPage');
             Route::post('edit',[UserPostController::class,'edit'])->name('user#postEdit');
             Route::get('delete',[UserPostController::class,'delete'])->name('post#delete');
         });
@@ -145,3 +146,5 @@ Route::middleware(['auth'])->group(function () {
 Route::post('password/forgot',[UserController::class,'sendResetLink'])->name('forgot.password.link');
 Route::get('password/reset/{token}',[UserController::class,'showResetForm'])->name('reset.password.form');
 Route::post('password/reset',[UserController::class,'resetPassword'])->name('reset.password');
+
+Route::post('/send-notification',[NotificationController::class,'send']);

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class UserAccountController extends Controller
 {
@@ -91,12 +92,41 @@ class UserAccountController extends Controller
 
     //Account input validation check
     private function accountValidationCheck($request) {
-        Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'name' => 'required|min:3|max:20',
-            'email' => 'required|max:40|unique:users,email,'.$request->id,
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                'unique:users,email,' . $request->id,
+                function ($attribute, $value, $fail) {
+                    // Check if the email domain is "ucsy.edu.mm"
+                    if (strpos($value, '@ucsy.edu.mm') === false) {
+                        $fail('The '.$attribute.' must be a valid email from UCSY.');
+                    }
+                }
+            ],
             'gender' => 'required',
-            'image' => 'mimes:png,jpg,jpeg,JPEG|file',
-        ])->validate();
+            'image' => 'mimes:png,jpg,jpeg|file',
+        ]);
+
+        $validator->after(function ($validator) use ($request) {
+            $image = $request->file('image');
+
+            if ($image) {
+                $extension = strtolower($image->getClientOriginalExtension());
+                $allowedExtensions = ['png', 'jpg', 'jpeg'];
+
+                if (!in_array($extension, $allowedExtensions)) {
+                    $validator->errors()->add('image', 'Invalid image file.');
+                }
+            }
+        });
+
+        if ($validator->fails()) {
+            throw new ValidationException($validator);
+        }
     }
 
     //get account data as object format

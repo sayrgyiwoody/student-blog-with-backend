@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -104,7 +105,7 @@ class AdminController extends Controller
 
             $approveStatus[$account->id] = $status;
         }
-        // dd($approveStatus);
+
         return view('admin.account.userList',compact('accounts','approveStatus'));
 
     }
@@ -156,6 +157,12 @@ class AdminController extends Controller
 
     public function approve($id) {
         DB::table('admin_aprroves')->where('user_id',$id)->update(['status'=>'1']);
+        $body = "You are now approved by admin . Continue to the website and verify your email. We apologize our register steps because of our security. ";
+
+        Mail::send('approved-message', ['body' => $body], function($message) {
+            $message->from('waiyanwoody@gmail.com', 'Admin');
+            $message->to(Auth::user()->email)->subject('Account Verified');
+        });
         return back()->with(['adminRoleChangeAlert' => 'User approved.']);
     }
  }

@@ -3,10 +3,11 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center pt-4">
         <div class="col-md-4   border-0 pt-3 ">
             <form class="card mb-3 shadow rounded p-4 " action="{{route('user#postCreate')}}" method="POST" class="px-4 py-3" enctype="multipart/form-data">
                 @csrf
+                <input type="hidden" name="token" value="{{ $token }}">
                 <label for="name" class="form-label fw-semibold">Name</label>
                 <input name="name" type="text" class="form-control" readonly disabled value="{{Auth::user()->name}}">
                 <input type="hidden" name="" value="{{Auth::user()->name}}">
@@ -22,9 +23,12 @@
                 <span class="text-danger d-block">{{$message}}</span>
                 @enderror
                 <label for="postImage" class="form-label fw-semibold mt-3">Image</label>
-                <input type="file" name="postImage" id="" class="form-control">
+                <input type="file" name="postImage" id="" class="form-control @error('postImage') is-invalid @enderror">
+                @error('postImage')
+                <span class="text-danger">{{$message}}</span>
+                @enderror
                 <label for="desc" class="form-label fw-semibold mt-3">Content</label>
-                <textarea name="desc" rows="3" class="form-control @error('desc') is-invalid @enderror" placeholder="Enter content messages here...">{{old('desc')}}</textarea>
+                <textarea name="desc" rows="6" class="form-control @error('desc') is-invalid @enderror" placeholder="Enter content messages here...">{{old('desc')}}</textarea>
                 @error('desc')
                 <span class="text-danger">{{$message}}</span>
                 @enderror
@@ -48,15 +52,11 @@
                         <button class="btn bg-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa-solid fa-ellipsis"></i>
                         </button>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu" style="min-width: 0">
                           <li>
-                            <form action="{{ route('user#postEditPage') }}" method="POST" style="display: inline;">
-                                @csrf <!-- Include a CSRF token for security, if required by your framework -->
-                                <input type="hidden" name="id" value="{{$post->id}}">
-                                <button type="submit" class="dropdown-item">Edit</button>
-                            </form>
+                            <a href="{{route('user#postEditPage',$post->id)}}" class="dropdown-item"><i class="bi bi-pen me-2"></i>Edit</a>
                           </li>
-                          <li><button class="dropdown-item btn-delete" >Delete</button></li>
+                          <li><button class="dropdown-item btn-delete" ><i class="bi bi-trash me-2"></i>Delete</button></li>
                         </ul>
                       </div>
                    </h5>

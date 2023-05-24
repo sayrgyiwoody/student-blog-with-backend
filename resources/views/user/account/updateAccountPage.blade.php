@@ -18,12 +18,15 @@
                             <div class="col-lg-6">
                                 <div style="width: auto; height: 300px; overflow: hidden;">
                                     @if (Auth::user()->image)
-                                    <img src="{{asset('storage/profileImages/'.Auth::user()->image)}}" style="object-fit:cover;object-position:center;" class="w-100 h-100 img-thumbnail card-img-top " alt="" />
+                                    <img src="{{asset('storage/'.Auth::user()->image)}}" style="object-fit:cover;object-position:center;" class="w-100 h-100 img-thumbnail card-img-top " alt="" />
                                     @else
                                     <img class="w-100 h-100 img-thumbnail" style="object-fit: cover; object-position:center;" src="https://ui-avatars.com/api/?name={{Auth::user()->name}}"/>
                                     @endif
                                 </div>
-                                <input type="file" name="image" class="form-control mt-3" >
+                                <input type="file" name="image" class="form-control mt-3  @error('image') is-invalid @enderror" >
+                                @error('image')
+                                        <span class="invalid-feedback">{{$message}}</span>
+                                @enderror
                             </div>
                             <div class="col-lg-6">
                                 <div class="row my-2">

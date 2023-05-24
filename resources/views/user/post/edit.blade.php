@@ -2,10 +2,12 @@
 
 
 @section('content')
-<div class="container-fluid">
+<div class="container-fluid pt-4">
     <div class="col-md-6 offset-lg-3 mt-4 border border-primary">
         <form action="{{route('user#postEdit')}}" method="POST" class="px-4 py-3" enctype="multipart/form-data">
             @csrf
+            <input type="hidden" name="token" value="{{ $token }}">
+
             <label for="name" class="form-label fw-semibold">Name</label>
             <input name="" type="text" class="form-control" readonly disabled value="{{Auth::user()->name}}">
             <input type="hidden" name="adminId" value="{{$post->admin_id}}">
@@ -21,9 +23,12 @@
             <span class="text-danger d-block">{{$message}}</span>
             @enderror
             <label for="postImage" class="form-label fw-semibold mt-3">Image</label>
-            <input type="file" name="postImage" id="" class="form-control">
+            <input type="file" name="postImage" id="" class="form-control @error('postImage') is-invalid @enderror">
+            @error('postImage')
+                <span class="text-danger d-block">{{$message}}</span>
+                @enderror
             <label for="desc" class="form-label fw-semibold mt-3">Content</label>
-            <textarea name="desc" rows="3" class="form-control @error('desc') is-invalid @enderror" placeholder="Enter content messages here...">{{old('desc',$post->desc)}}</textarea>
+            <textarea name="desc" rows="6" class="form-control @error('desc') is-invalid @enderror" placeholder="Enter content messages here...">{{old('desc',$post->desc)}}</textarea>
             @error('desc')
             <span class="text-danger">{{$message}}</span>
             @enderror
@@ -35,4 +40,23 @@
     </div>
 </div>
 
+@if (session('error'))
+
+    @section('scriptSource')
+        <script>
+            Swal.fire({
+                icon : 'error',
+                text: '{{ session('error') }}',
+                showConfirmButton: true,
+            }).then((result) => {
+                if(result.isConfirmed) {
+                location.reload();
+                }
+            })
+        </script>
+    @endsection
+
+@endif
+
 @endsection
+

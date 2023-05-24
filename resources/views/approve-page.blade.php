@@ -21,7 +21,7 @@
                 <h3>Admin Approve</h3>
                 <p>Click next to check for admin approve.</p>
                 @if (session('message'))
-                <div class="alert alert-danger">
+                <div class="alert alert-primary">
                     {{session('message')}}
                 </div>
                 @endif

@@ -68,7 +68,15 @@
                                 <td class="align-middle">{{$account->name}}</td>
                                 <td class="align-middle">{{$account->email}}</td>
                                 <td class="align-middle">{{$account->gender}}</td>
-                                <td class="align-middle">{{$approveStatus[$account->id]->status}}</td>
+                                <td class="align-middle">@if ($approveStatus[$account->id] == null)
+                                    null
+                                @elseif ($approveStatus[$account->id] != null)
+                                    @if ($approveStatus[$account->id]->status == '0')
+                                    pending
+                                    @elseif($approveStatus[$account->id]->status == '1')
+                                    approved
+                                    @endif
+                                @endif</td>
                                 <td class="align-middle">
                                     <div class="table-data-feature">
                                         <a href="{{route('admin#approve',$account->id)}}">
