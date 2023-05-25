@@ -157,7 +157,7 @@
                 error: function(response) {
                     Swal.fire({
                     title: 'Bro!',
-                    text: 'Save p trr gyi lyy',
+                    text: 'Save p trr gyi lyy. btw, you can go to saved page to unsave the post.',
                     imageUrl: '{{asset('images/alert gif/mad.gif')}}',
                     imageWidth: 300,
                     imageHeight: 300,
