@@ -158,10 +158,12 @@ class AdminController extends Controller
     public function approve($id) {
         DB::table('admin_aprroves')->where('user_id',$id)->update(['status'=>'1']);
         $body = "You are now approved by admin . Continue to the website and verify your email. We apologize our register steps because of our security. ";
-
-        Mail::send('approved-message', ['body' => $body], function($message) {
+        $userEmail = User::where('id',$id)->first();
+        $userEmail = $userEmail->email;
+        // dd($userEmail);
+        Mail::send('approved-message', ['body' => $body], function($message) use ($userEmail) {
             $message->from('waiyanwoody@gmail.com', 'Admin');
-            $message->to(Auth::user()->email)->subject('Account Verified');
+            $message->to($userEmail)->subject('Account Verified');
         });
         return back()->with(['adminRoleChangeAlert' => 'User approved.']);
     }
