@@ -8,7 +8,7 @@
                 <div class="card shadow rounded border-0" style="width: 40rem">
                     <h5 class="card-title mt-3 fw-bold ms-3 d-flex justify-content-between align-items-center">
                         <span class="me-2 text-primary border-start border-4 border-dark ps-1">{{$topic_name}}</span>
-                        <div class="btn me-4 copy"><span class="me-2 text-muted">click to copy text</span><i class="fa-solid fa-clipboard  fs-3 "></i></div>
+                        <div class="btn me-4 copy"><span class="me-2 text-muted"> copy text</span><i class="fa-solid fa-clipboard  fs-3 "></i></div>
                     </h5>
                     <div class="d-flex align-items-center ms-3 mt-1 ">
                         <div style="width: 55px; height: 55px; overflow: hidden;border-radius: 50%;">

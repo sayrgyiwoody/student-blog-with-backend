@@ -62,7 +62,11 @@
                             <tr>
                                 <td class="">
                                     <div class="mx-auto" style="width: 75px; height: 75px; overflow: hidden;">
-                                    <img class="w-100 h-100 rounded" style="object-fit: cover; object-position:center;" src="https://ui-avatars.com/api/?name={{$account->name}}"/>
+                                        @if ($account->image)
+                                                <img src="{{asset('storage/'.$account->image)}}" style="object-fit:cover;object-position:center;" class="w-100 h-100 img-thumbnail card-img-top " alt="" />
+                                                @else
+                                                <img class="w-100 h-100 img-thumbnail" style="object-fit: cover; object-position:center;" src="https://ui-avatars.com/api/?name={{$account->name}}"/>
+                                        @endif
                                     </div>
                                 </td>
                                 <td class="align-middle">{{$account->name}}</td>
