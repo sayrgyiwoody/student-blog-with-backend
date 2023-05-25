@@ -1,40 +1,3 @@
-{{-- <x-guest-layout>
-    <x-authentication-card>
-        <x-slot name="logo">
-            <x-authentication-card-logo />
-        </x-slot>
-
-        <x-validation-errors class="mb-4" />
-
-        <form method="POST" action="{{ route('reset.password') }}">
-            @csrf
-
-            <input type="hidden" name="token" value="{{ $token }}">
-
-            <div class="block">
-                <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $email)"  autofocus autocomplete="username" />
-            </div>
-
-            <div class="mt-4">
-                <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password"  autocomplete="new-password" />
-            </div>
-
-            <div class="mt-4">
-                <x-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
-                <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation"  autocomplete="new-password" />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <x-button>
-                    {{ __('Reset Password') }}
-                </x-button>
-            </div>
-        </form>
-    </x-authentication-card>
-</x-guest-layout> --}}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,7 +28,7 @@
 </head>
 <body>
     <div class="container-fluid">
-        <div class="col-lg-4 offset-lg-4">
+        <div class="col-lg-4 offset-lg-4 mt-4">
             <div class="card">
                 <div class="card-body">
                     <div class="card-title">
@@ -74,29 +37,30 @@
                     <hr>
                     <form action="{{route('reset.password')}}" method="post" novalidate="novalidate">
                         @csrf
+                        <input type="hidden" name="token" value="{{$token}}">
                         <div class="form-group">
-                            <label for="oldPassword" class="control-label mb-1"><strong>Old Password</strong></label>
-                            <input id="cc-pament" name="oldPassword" type="password" class="form-control @if (session('changePasswordFail')) is-invalid @endif @error('oldPassword') is-invalid @enderror" aria-required="true" aria-invalid="false" placeholder="Enter Old Password">
-                            @error('oldPassword')
+                            <label for="email" class="control-label mb-1 mt-3"><strong>Your email</strong></label>
+                            <input id="cc-pament" name="email" type="email" class="form-control @error('email') is-invalid @enderror" aria-required="true" aria-invalid="false" value="{{$email}}" readonly>
+                            @error('email')
                                 <span class="invalid-feedback">{{$message}}</span>
                             @enderror
                             @if (session('changePasswordFail'))
                                 <span class="invalid-feedback">{{session('changePasswordFail')}}</span>
                             @endif
-                            <label for="newPassword" class="control-label mb-1 mt-3"><strong>New Password</strong></label>
-                            <input id="cc-pament" name="newPassword" type="password" class="form-control @error('newPassword') is-invalid @enderror" aria-required="true" aria-invalid="false" placeholder="Enter New Password">
-                            @error('newPassword')
+                            <label for="password" class="control-label mb-1 mt-3"><strong>New Password</strong></label>
+                            <input id="cc-pament" name="password" type="password" class="form-control @error('password') is-invalid @enderror" aria-required="true" aria-invalid="false" placeholder="Enter New Password">
+                            @error('password')
                                 <span class="invalid-feedback">{{$message}}</span>
                             @enderror
-                            <label for="confirmPassword" class="control-label mb-1 mt-3"><strong>Confirm Password</strong></label>
-                            <input id="cc-pament" name="confirmPassword" type="password" class="form-control @error('confirmPassword') is-invalid @enderror" aria-required="true" aria-invalid="false" placeholder="Enter Confirm Password">
-                            @error('confirmPassword')
+                            <label for="password_confirmation" class="control-label mb-1 mt-3"><strong>Confirm Password</strong></label>
+                            <input id="cc-pament" name="password_confirmation" type="password" class="form-control @error('password_confirmation') is-invalid @enderror" aria-required="true" aria-invalid="false" placeholder="Enter Confirm Password">
+                            @error('password_confirmation')
                                 <span class="invalid-feedback">{{$message}}</span>
                             @enderror
                         </div>
                         <div class="mt-3 d-flex justify-content-center">
                             <button id="payment-button" type="submit" class="btn btn-lg btn-primary btn-block text-white w-100">
-                                <i class="fas fa-key me-2"></i>
+                                <i class="fa-solid fa-lock-open me-2"></i>
                                 <span id="payment-button-amount">Change Password</span>
                             </button>
                         </div>

@@ -127,7 +127,7 @@ class UserController extends Controller
             'password' => 'required|min:8|confirmed',
             'password_confirmation' => 'required'
         ])->validate();
-
+        
         $check_token = \DB::table('password_reset_tokens')
         ->where([
             'email' => $request->email,

@@ -76,7 +76,9 @@
                                     @elseif($approveStatus[$account->id]->status == '1')
                                     approved
                                     @endif
-                                @endif</td>
+                                @endif
+                                @if($account->email_verified_at != null) <i class="bi bi-person-check text-success fs-5"></i> @endif
+                                </td>
                                 <td class="align-middle">
                                     <div class="table-data-feature">
                                         <a href="{{route('admin#approve',$account->id)}}">

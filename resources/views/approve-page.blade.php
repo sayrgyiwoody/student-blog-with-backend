@@ -24,6 +24,7 @@
                 <div class="alert alert-primary">
                     {{session('message')}}
                 </div>
+                <img src="{{asset('images/approve-mail.jpg')}}"  class="img-fluid">
                 @endif
                 <hr>
                 <form action="{{route('auth#approveRequest')}}" method="POST">

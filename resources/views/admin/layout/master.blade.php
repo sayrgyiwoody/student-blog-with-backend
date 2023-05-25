@@ -45,7 +45,8 @@
      <!-- Add SweetAlert styles -->
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.6/dist/sweetalert2.min.css">
 
-
+    {{-- bootstrap icon --}}
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
 
      {{-- Font Awesome --}}
