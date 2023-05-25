@@ -32,8 +32,8 @@
                     </div>
                     <div class="mt-4 mt-lg-5  login-form-container">
                         <div class="mb-4">
-                            <h2 class=" fw-semibold">Welcome to Students' blog</h2>
-                            <p class="mt-3 text-muted" style="font-size: 21px;">Login your account</p>
+                            <h2 class=" fw-semibold fs-4">Welcome to Students' blog</h2>
+                            <p class="mt-3 text-muted fs-6" style="font-size: 21px;">Login your account</p>
                         </div>
                         <div class="">
                             <form method="POST" action="{{route('login')}}" class="pt-lg-4">
