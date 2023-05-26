@@ -74,9 +74,9 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="row p-3 d-flex justify-content-evenly">
-                                    <a href="{{route('user#informationPage')}}" class="btn btn-secondary" style="width: 45%"><i class="fa-solid  fa-arrow-left me-2" ></i>Back</a>
-                                    <button type="submit" class="btn btn-primary" style="width: 45%"><i class="fa-solid fa-arrow-up-from-bracket me-2"></i>Update</button>
+                                <div class="row py-3 px-2 d-flex justify-content-evenly">
+                                    <a href="{{route('user#informationPage')}}" class="btn btn-secondary" style="width: 28%"><i class="fa-solid  fa-arrow-left me-2" ></i>Back</a>
+                                    <button type="submit" class="btn btn-primary" style="width: 68%"><i class="fa-solid fa-arrow-up-from-bracket me-2"></i>Update</button>
                                 </div>
                             </div>
                         </div>

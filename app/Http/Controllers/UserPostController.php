@@ -149,13 +149,15 @@ class UserPostController extends Controller
             if($request->hasFile('postImage')) {
                 $dbImage = post::select('image')->where('id',$request->postId)->first();
                 $dbImage = $dbImage->image;
+                // dd($dbImage);
             if($dbImage!=null) {
                 Storage::delete('public/'.$dbImage);
             }
             $postImageName = md5($request->file('postImage')->getClientOriginalName()). ".jpg";
-            $post['image'] = $postImageName ;
+
+            $data['image'] = $postImageName ;
             $request->file('postImage')->storeAs('public/',$postImageName);
-        }
+            }
 
         post::where('id',$data['id'])->update($data);
 

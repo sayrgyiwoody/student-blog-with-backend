@@ -56,9 +56,9 @@
                                         <input readonly disabled type="text" name="" class="form-control form-control-sm border-0 border-bottom border-dark   bg-white" value="{{Auth::user()->email}}" id="">
                                     </div>
                                 </div>
-                                <div class="row p-3 d-flex justify-content-evenly">
-                                    <a href="{{route('user#home')}}" style="width: 45%" class="btn btn-secondary"><i class="fa-solid fa-arrow-left  me-2"></i>Back</a>
-                                    <a href="{{route('user#updateAccountPage')}}" style="width: 45%" class="btn btn-primary"><i class="fa-solid fa-pen-to-square  me-2"></i>Edit</a>
+                                <div class="row py-3 px-2 d-flex justify-content-evenly">
+                                    <a href="{{route('user#home')}}" style="width: 28%" class="btn btn-secondary"><i class="fa-solid fa-arrow-left  me-2"></i>Back</a>
+                                    <a href="{{route('user#updateAccountPage')}}" style="width: 68%" class="btn btn-primary"><i class="fa-solid fa-pen-to-square  me-2"></i>Edit</a>
                                 </div>
                             </div>
                         </div>
