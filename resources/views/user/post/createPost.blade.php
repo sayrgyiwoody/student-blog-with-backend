@@ -2,9 +2,48 @@
 
 
 @section('content')
+
+<style>
+    #create-post {
+    position: fixed;
+    bottom: 30px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+
+  #create-post i {
+    font-size: 30px;
+    color: #333;
+  }
+
+
+
+    @media only screen and (max-width: 600px) {
+        #post-form {
+            position: fixed;
+            top: 80px;
+            right: -100%;
+        }
+
+
+    }
+
+
+</style>
 <div class="container">
-    <div class="row justify-content-center pt-4">
-        <div class="col-md-4   border-0 pt-3 ">
+    <div class="row justify-content-center pt-3">
+        <div id="create-post" class="bg-primary d-md-none">
+            <i class="bi bi-pencil-square text-white"></i>
+          </div>
+
+        <div id="post-form" class="col-md-4 d-none d-md-block  border-0 pt-3 ">
             <form class="card mb-3 shadow rounded p-4 " action="{{route('user#postCreate')}}" method="POST" class="px-4 py-3" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="token" value="{{ $token }}">
@@ -13,7 +52,7 @@
                 <input type="hidden" name="" value="{{Auth::user()->name}}">
                 <input type="hidden" name="adminId" value="{{Auth::user()->id}}">
                 <label for="topicId" class="form-label fw-semibold mt-3">Topic</label>
-                <select name="topicId"  class="form-select @error('topicId') is-invalid @enderror">
+                <select name="topicId" class="form-select @error('topicId') is-invalid @enderror" style="transition: none;min-width:0;">
                     <option value="">Choose topic</option>
                     @foreach ($topics as $t )
                         <option value="{{$t->id}}" @if(old('topicId') == $t->id) selected @endif >{{$t->name}}</option>
@@ -38,7 +77,7 @@
                 </div>
             </form>
         </div>
-        <div class="col-md-6 py-3 overflow-auto flex-column bg-card" style="height:92vh;">
+        <div id="user-posts" class="col-md-6 py-3 overflow-auto flex-column bg-card" style="height:92vh;">
             @if (count($posts) != 0)
            @foreach ($posts as $post )
            <div class="card-box d-flex justify-content-center mb-4">
@@ -185,12 +224,32 @@
                     });
                 }
 
-            });
+            });postImage
 
         }
             })
 
         })
+
+        //Show form
+        $(document).ready(function() {
+            $('#create-post').click(function() {
+                $(this).hide();
+                $('#post-form').removeClass('d-none').animate({ right: '0' }, 300);
+                $('#user-posts').hide();
+            });
+        });
+
+
+        @if($errors->has('topicId') || $errors->has('postImage') || $errors->has('desc'))
+            $(document).ready(function() {
+                $('#create-post').hide();
+                $('#post-form').removeClass('d-none').animate({ right: '0' }, 300);
+                $('#user-posts').hide();
+            });
+        @endif
+
+
 </script>
 
 @endsection

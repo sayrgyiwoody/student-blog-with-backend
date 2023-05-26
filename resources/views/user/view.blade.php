@@ -20,12 +20,14 @@
                         </div>
                         <div class="d-flex ">
                             <div class="ms-2">
-                                <span style="font-size: 18px;" class="fw-semibold" >{{$post->admin_name}}</span><br>
+                                <span style="font-size: 18px;" class="fw-semibold" >{{$post->admin_name}}
+                                    @if ($post->role == 'admin')
+                                    <i class="bi bi-patch-check-fill " style="color: #1DA1F2;font-size:14px;"></i>
+                                @endif
+                                </span>
+                                <br>
                                 <span style="font-size: 12px;" class="">{{$post->created_at->diffForHumans()}}</span>
                             </div>
-                            @if ($post->role == 'admin')
-                                <i class="bi bi-patch-check-fill mt-1 ms-1 " style="color: #1DA1F2"></i>
-                            @endif
                         </div>
                     </div>
                     <div class="img-container pt-3 px-4 ">
