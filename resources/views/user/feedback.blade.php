@@ -4,7 +4,7 @@
 @section('content')
 <div class="container-fluid  " style="height: 88vh;background-color:">
     <div class="row pt-lg-5">
-        <div class="mt-lg-5 col-12 col-lg-8 offset-lg-2  contact-form px-5 py-4 rounded ">
+        <div class="mt-lg-5 col-12 col-lg-8 offset-lg-2  contact-form px-3 px-lg-5 py-4 rounded ">
             <div class="container-lg">
                 <div class="row my-4">
                     <h3 class="text-center">Feedback Form</h3>
@@ -44,20 +44,20 @@
                         @csrf
                         <div class="row mb-3">
                             <div class="col-lg-6">
-                              <input type="text" name="name" value="{{Auth::user()->name}}" placeholder="Your Name" class="  form-control mb-3 mb-lg-0 form-control-lg bg-white text-primary  fs-6 border-2">
+                              <input required type="text" name="name" value="{{Auth::user()->name}}" placeholder="Your Name" class="  form-control mb-3 mb-lg-0 form-control-lg bg-white text-primary  fs-6 border-2">
                             </div>
                             <div class="col-lg-6">
-                              <input type="text" name="email" value="{{Auth::user()->email}}" placeholder="Your Email" class="  form-control  form-control-lg bg-white text-primary  fs-6 border-2">
+                              <input required type="text" name="email" value="{{Auth::user()->email}}" placeholder="Your Email" class="  form-control  form-control-lg bg-white text-primary  fs-6 border-2">
                             </div>
                           </div>
                           <div class="row mb-3">
                             <div class="col-lg-12">
-                              <input type="text" name="subject"  placeholder="Subject" class="form-control form-control-lg  bg-white text-primary fs-6 border-2">
+                              <input required type="text" name="subject"  placeholder="Subject" class="form-control form-control-lg  bg-white text-primary fs-6 border-2">
                             </div>
                           </div>
                           <div class="row mb-3">
                             <div class="col-lg-12">
-                              <textarea name="message" class="form-control form-control-lg  bg-white text-primary fs-6 border-2" placeholder="Text anything you want to say..." cols="30" rows="4"></textarea>
+                              <textarea required name="message" class="form-control form-control-lg  bg-white text-primary fs-6 border-2" placeholder="Text anything you want to say..." cols="30" rows="4"></textarea>
                             </div>
                           </div>
                           <button type="submit" class="btn btn-primary">Send <i class="fa-solid fa-paper-plane ms-2"></i></button>

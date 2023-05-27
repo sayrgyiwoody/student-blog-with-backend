@@ -26,6 +26,12 @@
 
      {{-- bootstrap icon --}}
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    {{-- for dark mode switch  --}}
+    <link rel="stylesheet" href="{{asset('user/css/darkmode-switch.css')}}">
+    {{-- see more  --}}
+    <link rel="stylesheet" href="{{asset('user/css/seemore.css')}}">
+    {{-- search  --}}
+    <link rel="stylesheet" href="{{asset('user/css/search.css')}}">
 
 </head>
 
@@ -39,11 +45,32 @@
                       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                       </button>
-                      <div class="form-check form-switch mx-auto">
+                      {{-- <div class="form-check form-switch mx-auto">
                         <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                      </div> --}}
+                      <label class="switch ms-2">
+                        <span class="sun"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill="#ffd43b"><circle r="5" cy="12" cx="12"></circle><path d="m21 13h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 0 2zm-17 0h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 0 2zm13.66-5.66a1 1 0 0 1 -.66-.29 1 1 0 0 1 0-1.41l.71-.71a1 1 0 1 1 1.41 1.41l-.71.71a1 1 0 0 1 -.75.29zm-12.02 12.02a1 1 0 0 1 -.71-.29 1 1 0 0 1 0-1.41l.71-.66a1 1 0 0 1 1.41 1.41l-.71.71a1 1 0 0 1 -.7.24zm6.36-14.36a1 1 0 0 1 -1-1v-1a1 1 0 0 1 2 0v1a1 1 0 0 1 -1 1zm0 17a1 1 0 0 1 -1-1v-1a1 1 0 0 1 2 0v1a1 1 0 0 1 -1 1zm-5.66-14.66a1 1 0 0 1 -.7-.29l-.71-.71a1 1 0 0 1 1.41-1.41l.71.71a1 1 0 0 1 0 1.41 1 1 0 0 1 -.71.29zm12.02 12.02a1 1 0 0 1 -.7-.29l-.66-.71a1 1 0 0 1 1.36-1.36l.71.71a1 1 0 0 1 0 1.41 1 1 0 0 1 -.71.24z"></path></g></svg></span>
+                        <span class="moon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="m223.5 32c-123.5 0-223.5 100.3-223.5 224s100 224 223.5 224c60.6 0 115.5-24.2 155.8-63.4 5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6-96.9 0-175.5-78.8-175.5-176 0-65.8 36-123.1 89.3-153.3 6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"></path></svg></span>
+                        <input type="checkbox" id="flexSwitchCheckDefault" class="input form-check-input">
+                        <span class="slider"></span>
+                      </label>
+
+                      <form class="" role="search" action="{{route('user#home')}}" method="GET">
+                        {{-- <input  name="searchKey" value="{{request('searchKey')}}"  class="form-control me-2" type="search" placeholder="Search for content" aria-label="Search">
+                        <button class="btn btn-outline-primary" type="submit">Search</button> --}}
+                        <div class="container">
+                          <input placeholder="search..." required="" class="input" name="searchKey" value="{{request('searchKey')}}" type="text">
+                          <div class="icon text-primary">
+                              <svg viewBox="0 0 512 512" class="ionicon" xmlns="http://www.w3.org/2000/svg">
+                                  <title>Search</title>
+                                  <path stroke-width="32" stroke-miterlimit="10" stroke="currentColor" fill="none" d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z"></path>
+                                  <path d="M338.29 338.29L448 448" stroke-width="32" stroke-miterlimit="10" stroke-linecap="round" stroke="currentColor" fill="none"></path>
+                              </svg>
+                          </div>
                       </div>
-                      <div class="btn bg-dark text-primary me-5 darkmode-icon " disabled><i class="bi bi-sun-fill"></i></div>
-                      <a class="navbar-brand fw-semibold text-light" href="#">
+                      </form>
+                      {{-- <div class="btn bg-dark text-primary me-5 darkmode-icon " disabled><i class="bi bi-sun-fill"></i></div> --}}
+                      <a class="navbar-brand fw-semibold text-light ms-lg-5" href="#">
                         <img src="{{asset('images/logo_dark.png')}}" style="width: 60px;">
                       </a>
 
@@ -61,7 +88,7 @@
                           <li class="nav-item ">
                             <a class="nav-link " href="{{route('user#postHome')}}">Create Post</a>
                           </li>
-                          <div class="dropdown  d-lg-none">
+                          <div class="dropdown mt-2  d-lg-none">
                             <button class="btn text-white btn-white border border-primary border-2 dropdown-toggle" type="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
                                 Topics to choose
@@ -74,11 +101,24 @@
                             </ul>
                         </div>
                         </ul>
-                        <form class="d-flex me-0 me-lg-3" role="search" action="{{route('user#home')}}" method="GET">
-                          <input  name="searchKey" value="{{request('searchKey')}}"  class="form-control me-2" type="search" placeholder="Search for content" aria-label="Search">
-                          <button class="btn btn-outline-primary" type="submit">Search</button>
-                        </form>
-                        <div class="btn-group  mt-3 mb-2 mt-lg-0">
+                        {{-- <form class="d-flex me-0 me-lg-3" role="search" action="{{route('user#home')}}" method="GET"> --}}
+                          {{-- <input  name="searchKey" value="{{request('searchKey')}}"  class="form-control me-2" type="search" placeholder="Search for content" aria-label="Search">
+                          <button class="btn btn-outline-primary" type="submit">Search</button> --}}
+                          {{-- <div class="container">
+                            <input placeholder="Type to search..." required="" class="input" name="text" type="text">
+                            <div class="icon">
+                                <svg viewBox="0 0 512 512" class="ionicon" xmlns="http://www.w3.org/2000/svg">
+                                    <title>Search</title>
+                                    <path stroke-width="32" stroke-miterlimit="10" stroke="currentColor" fill="none" d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z"></path>
+                                    <path d="M338.29 338.29L448 448" stroke-width="32" stroke-miterlimit="10" stroke-linecap="round" stroke="currentColor" fill="none"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        </form> --}}
+                        {{-- changes --}}
+
+                        {{-- Changes  --}}
+                        <div class="btn-group  mt-1 mb-2 mt-lg-0">
                             <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                 {{Auth::user()->name}}
                             </button>
@@ -146,7 +186,7 @@
             });
 
             function enableDarkMode() {
-                $('.darkmode-icon').html('<i class="bi bi-moon-stars-fill"></i>');
+                // $('.darkmode-icon').html('<i class="bi bi-moon-stars-fill"></i>');
                 $('.card').addClass('card-dark border-primary');
                 $('.body').addClass('card-dark');
                 $('.bg-card').addClass('body-dark');
@@ -158,7 +198,7 @@
                 $('.body').removeClass('card-dark');
                 $('.bg-card').removeClass('body-dark');
                 $('.btn-white').removeClass('btn-dark');
-                $('.darkmode-icon').html('<i class="bi bi-sun-fill"></i>');
+                // $('.darkmode-icon').html('<i class="bi bi-sun-fill"></i>');
 
             }
 
