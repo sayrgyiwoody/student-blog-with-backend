@@ -33,6 +33,14 @@
     {{-- search  --}}
     <link rel="stylesheet" href="{{asset('user/css/search.css')}}">
 
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        .shadow_2 {
+            box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+        }
+    </style>
 </head>
 
 <body class="body pt-5">
@@ -201,6 +209,25 @@
                 // $('.darkmode-icon').html('<i class="bi bi-sun-fill"></i>');
 
             }
+
+            $(document).ready(function() {
+                $('input').focus(function() {
+                    if (window.innerWidth <= 768) { // Adjust the breakpoint according to your needs
+                    $('.switch').animate({ left: '-200px' }, 500);
+                    $('.navbar-brand').css('position', 'relative').animate({ right: '-100px' }, 500);
+                    }
+                });
+
+                $('input').blur(function() {
+                    if (window.innerWidth <= 768) { // Adjust the breakpoint according to your needs
+                    $('.switch').animate({ left: '0px' }, 500);
+                    $('.navbar-brand').css('position', 'relative').animate({ right: '0px' }, 500);
+                    }
+                });
+            });
+
+
+
 
 
         </script>
