@@ -26,17 +26,26 @@ use App\Http\Controllers\NotificationController;
 |
 */
 
-Route::redirect('/', 'login');
+Route::redirect('/', 'user/home');
 
+Route::group(['prefix'=>'user',],function(){
+    Route::group(['prefix'=>'home'],function(){
+        Route::get('/',[UserController::class,'home'])->name('user#home');
+        Route::get('view/{id}',[UserController::class,'view'])->name('user#view');
+        Route::get('topicFilter/{id}',[UserController::class,'topicFilter'])->name('user#topicFilter');
+    });
+});
 
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard',[AuthController::class,'dashboard'])->name('auth#dashboard');
-    Route::get('/adminApprove',[AuthController::class,'adminApprovePage'])->name('auth#adminApprovePage');
-    Route::post('/approveRequest',[AuthController::class,'approveRequest'])->name('auth#approveRequest');
-    Route::post('/sendCode',[AuthController::class,'sendCode'])->name('auth#sendCode');
-    Route::get('checkCodePage',[AuthController::class,'checkCodePage'])->name('auth#checkCodePage');
-    Route::post('/verifyCode',[AuthController::class,'checkCode'])->name('auth#checkCode');
+    Route::group(['middleware'=>'verified_middleware'],function(){
+        Route::get('/adminApprove',[AuthController::class,'adminApprovePage'])->name('auth#adminApprovePage');
+        Route::post('/approveRequest',[AuthController::class,'approveRequest'])->name('auth#approveRequest');
+        Route::post('/sendCode',[AuthController::class,'sendCode'])->name('auth#sendCode');
+        Route::get('checkCodePage',[AuthController::class,'checkCodePage'])->name('auth#checkCodePage');
+        Route::post('/verifyCode',[AuthController::class,'checkCode'])->name('auth#checkCode');
+    });
 
     //Admin
     Route::group(['prefix'=>'admin','middleware'=>'admin_auth'],function() {
@@ -105,9 +114,9 @@ Route::middleware(['auth'])->group(function () {
         // })->name('user#home');
 
         Route::group(['prefix'=>'home'],function(){
-            Route::get('/',[UserController::class,'home'])->name('user#home');
-            Route::get('view/{id}',[UserController::class,'view'])->name('user#view');
-            Route::get('topicFilter/{id}',[UserController::class,'topicFilter'])->name('user#topicFilter');
+            // Route::get('/',[UserController::class,'home'])->name('user#home');
+            // Route::get('view/{id}',[UserController::class,'view'])->name('user#view');
+            // Route::get('topicFilter/{id}',[UserController::class,'topicFilter'])->name('user#topicFilter');
             Route::get('save',[SavedController::class,'save'])->name('user#save');
         });
 

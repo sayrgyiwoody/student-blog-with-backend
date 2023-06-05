@@ -63,12 +63,18 @@
                        <p class="card-text" style="white-space: pre-wrap">{{Str::words($post->desc,20,"....")}}</p>
                        <hr />
                        <div class=" d-flex justify-content-between align-items-center">
+                            @if (Auth::check())
                                <div class="btn  btn-save">
-                                   <i class="fa-regular @if ($saveStatus[$post->id] == true)
+                                   <i class="fa-regular
+                                    @if ($saveStatus[$post->id] == true)
                                     fa-solid
-                                   @endif text-primary fa-bookmark fs-3"></i>
+                                    @endif
+                                     text-primary fa-bookmark fs-3"></i>
                                </div>
-                           <a href="{{route('user#view',$post->id)}}" class="btn btn-primary">
+                            @endif
+                           <a href="{{route('user#view',$post->id)}}" class="btn btn-primary @if (!(Auth::check()))
+                            ms-auto
+                           @endif">
                                <i class="fa-solid fa-eye me-2"></i>see more
                            </a>
                            {{-- <button class="learn-more">
@@ -205,5 +211,28 @@
     });
   });
 </script>
+
+<script>
+    // Get the stored timestamp from localStorage
+    var lastAlertTimestamp = localStorage.getItem('lastAlertTimestamp');
+
+    // Calculate the current timestamp
+    var currentTimestamp = new Date().getTime();
+
+    // Check if the alert should be displayed
+    if (!lastAlertTimestamp || currentTimestamp - lastAlertTimestamp >= 24 * 60 * 60 * 1000) {
+        Swal.fire({
+            icon: 'info',
+            title: 'New Update!',
+            text: 'You can now see home page posts and view details and you can search via search box or topic filter but you have to login for some features. It will return back',
+            confirmButtonText: 'OK'
+        });
+
+        // Update the stored timestamp to the current timestamp
+        localStorage.setItem('lastAlertTimestamp', currentTimestamp);
+    }
+</script>
+
+
 @endsection
 

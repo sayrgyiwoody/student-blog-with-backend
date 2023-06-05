@@ -49,12 +49,15 @@ class UserController extends Controller
         $posts = $query->paginate(10);
         $topics = Topic::orderBy('created_at', 'desc')->get();
         $saveStatus = [];
-        foreach ($posts as $post) {
-            $status = Saved::where('user_id', Auth::user()->id)
-                ->where('post_id', $post->id)
-                ->exists();
+        // dd(Auth::check());
+        if(Auth::check()) {
+            foreach ($posts as $post) {
+                $status = Saved::where('user_id', Auth::user()->id)
+                    ->where('post_id', $post->id)
+                    ->exists();
 
-            $saveStatus[$post->id] = $status;
+                $saveStatus[$post->id] = $status;
+            }
         }
         return view('user.home', compact('posts', 'topics', 'saveStatus'));
     }
@@ -77,12 +80,14 @@ class UserController extends Controller
         ->leftJoin('topics','posts.topic_id','topics.id')
         ->orderBy('created_at','desc')->where('topic_id',$topicId)->paginate(10);
         $saveStatus = [];
-        foreach($posts as $post) {
-            $status = Saved::where('user_id', Auth::user()->id)
-                ->where('post_id', $post->id)
-                ->exists();
+        if(Auth::check()) {
+            foreach($posts as $post) {
+                $status = Saved::where('user_id', Auth::user()->id)
+                    ->where('post_id', $post->id)
+                    ->exists();
 
-            $saveStatus[$post->id] = $status;
+                $saveStatus[$post->id] = $status;
+            }
         }
         $topics = Topic::orderBy('created_at','desc')->get();
         return view('user.home',compact('posts','topics','saveStatus'));
@@ -127,7 +132,7 @@ class UserController extends Controller
             'password' => 'required|min:8|confirmed',
             'password_confirmation' => 'required'
         ])->validate();
-        
+
         $check_token = \DB::table('password_reset_tokens')
         ->where([
             'email' => $request->email,

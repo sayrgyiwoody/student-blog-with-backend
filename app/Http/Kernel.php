@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\UserMiddleware;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\VerifiedMiddleware;
 use App\Http\Middleware\verificationmiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -69,5 +70,6 @@ class Kernel extends HttpKernel
         'admin_auth' => AdminMiddleware::class,
         'user_auth' => UserMiddleware::class,
         'verfiy_auth' => verificationmiddleware::class,
+        'verified_middleware' => VerifiedMiddleware::class,
     ];
 }

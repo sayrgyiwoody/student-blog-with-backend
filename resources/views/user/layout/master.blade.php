@@ -84,18 +84,21 @@
 
                       <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
                         <ul class="navbar-nav me-auto mx-lg-auto mb-2 mb-lg-0 ms-0">
-                          <li class="nav-item">
-                            <a class="nav-link " aria-current="page" href="{{route('user#home')}}">Home</a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link " href="{{route('saved#list')}}">Saved</a>
-                          </li>
-                          <li class="nav-item ">
-                            <a class="nav-link " href="{{route('feedback#form')}}">Feedback</a>
-                          </li>
-                          <li class="nav-item ">
-                            <a class="nav-link " href="{{route('user#postHome')}}">Create Post</a>
-                          </li>
+
+                          @if (Auth::check())
+                            <li class="nav-item">
+                                <a class="nav-link " aria-current="page" href="{{route('user#home')}}">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link " href="{{route('saved#list')}}">Saved</a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link " href="{{route('feedback#form')}}">Feedback</a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link " href="{{route('user#postHome')}}">Create Post</a>
+                            </li>
+                          @endif
                           <div class="dropdown mt-2  d-lg-none">
                             <button class="btn text-white btn-white border border-primary border-2 dropdown-toggle" type="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
@@ -126,6 +129,7 @@
                         {{-- changes --}}
 
                         {{-- Changes  --}}
+                        @if(Auth::check())
                         <div class="btn-group  mt-1 mb-2 mt-lg-0">
                             <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                 {{Auth::user()->name}}
@@ -139,6 +143,11 @@
                               </form>
                             </ul>
                         </div>
+                        @else
+                        <i class="fa-solid fa-user"></i>
+                        <span class="me-2">Guest</span>
+                        <a href="{{route('login')}}" class="btn btn-primary">Login</a>
+                        @endif
                       </div>
                     </div>
                 </nav>
@@ -210,21 +219,6 @@
 
             }
 
-            $(document).ready(function() {
-                $('input').focus(function() {
-                    if (window.innerWidth <= 768) { // Adjust the breakpoint according to your needs
-                    $('.switch').animate({ left: '-200px' }, 500);
-                    $('.navbar-brand').css('position', 'relative').animate({ right: '-100px' }, 500);
-                    }
-                });
-
-                $('input').blur(function() {
-                    if (window.innerWidth <= 768) { // Adjust the breakpoint according to your needs
-                    $('.switch').animate({ left: '0px' }, 500);
-                    $('.navbar-brand').css('position', 'relative').animate({ right: '0px' }, 500);
-                    }
-                });
-            });
 
 
 
