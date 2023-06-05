@@ -144,8 +144,8 @@
                             </ul>
                         </div>
                         @else
-                        <i class="fa-solid fa-user"></i>
-                        <span class="me-2">Guest</span>
+                        <i class="fa-solid fa-user text-white"></i>
+                        <span class="me-2 text-white">Guest</span>
                         <a href="{{route('login')}}" class="btn btn-primary">Login</a>
                         @endif
                       </div>
