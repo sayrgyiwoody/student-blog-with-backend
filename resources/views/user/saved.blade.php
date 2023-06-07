@@ -34,13 +34,17 @@
                         </div>
                        </div>
                    </div>
-                   <div class="img-container pt-3 px-4 ">
+                   <div class="img-container my-3 mx-4 border rounded border-dark border-3">
                     @if ($post->image)
-                    <img src="{{asset('storage/'.$post->image)}}" class="card-img-top img-thumbnail border border-dark" alt="" />
+                        <img src="{{asset('storage/'.$post->image)}}" class="image card-img-top " />
+                        <div class="buttons">
+                            <button class="btn btn-primary btn-view"><i class="fa-solid fa-mountain-sun me-2"></i>View</button>
+                            <a href="{{asset('storage/'.$post->image)}}" download class="btn btn-primary btn-download"><i class="fa-solid fa-download"></i></a>
+                        </div>
                     @else
-                    <img src="{{asset('images/alert gif/postimg.jpg')}}" class="card-img-top img-thumbnail border border-dark" alt="" />
+                        <img src="{{asset('images/alert gif/postimg.jpg')}}" class="card-img-top img-thumbnail" alt="" />
                     @endif
-                   </div>
+                    </div>
                    <div class="card-body">
                        <p class="card-text" style="white-space: pre-wrap">{{Str::words($post->desc,20,"....")}}</p>
                        <hr />

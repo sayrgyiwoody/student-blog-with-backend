@@ -219,13 +219,68 @@
 
             }
 
-
-
-
-
-
         </script>
 
+
+        <script>
+            $(document).ready(function(){
+                $image = null;
+                $('.card-box').each(function(){
+                    $viewButton = $(this).find('.btn-view');
+                    $image_container = $(this).find('.img-container');
+                        if ($image_container.height() > 250) {
+                            $viewButton.show();
+                        } else {
+                            $viewButton.hide();
+                        }
+                })
+
+                $old_id = null;
+                $('.image').click(function(){
+                    $parentNode = $(this).parents('.card-box');
+                    $viewButton = $parentNode.find('.btn-view');
+                    $image_container = $parentNode.find('.img-container');
+                    $image = $parentNode.find('.image');
+                    $buttons = $parentNode.find('.buttons');
+                    $image.css('filter', 'blur(2px)');
+                    $buttons.css('opacity', '1');
+                    $buttons.css('visibility', 'visible');
+                })
+
+
+                $('.btn-view').on('click', function() {
+                        if ($(this).text() === 'Back') {
+                            $(this).html('<i class="fa-solid fa-mountain-sun me-2"></i>View');
+                        } else {
+                            $(this).html('<i class="fa-solid fa-arrow-left me-2"></i>Back');
+                        }
+                        $parentNode = $(this).parents('.card-box');
+                        $image_container = $parentNode.find('.img-container');
+                        $image = $parentNode.find('.image');
+                        $image_container.toggleClass('full-width');
+                        $image.toggleClass('filter-none');
+                });
+
+
+                function removeFilterAndHideButtons() {
+                    $image.css('filter', 'none');
+                    $buttons.css('opacity', '0');
+                    $buttons.css('visibility', 'hidden');
+                }
+
+                $(document).on('click', function(event) {
+                    if($image!=null) {
+                        if (!$(event.target).closest($image).length) {
+                            removeFilterAndHideButtons();
+                        }
+                    }
+                });
+
+
+
+
+            })
+        </script>
         <script src="{{asset('user/js/main.js')}}"></script>
 </body>
 

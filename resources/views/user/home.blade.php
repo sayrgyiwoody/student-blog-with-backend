@@ -51,13 +51,17 @@
                     </div>
                        {{-- end changes --}}
                    </div>
-                   <div class="img-container pt-3 px-4 ">
-                    @if ($post->image)
-                    <img src="{{asset('storage/'.$post->image)}}" class="card-img-top img-thumbnail border border-dark" alt="" />
-                    @else
-                    <img src="{{asset('images/alert gif/postimg.jpg')}}" class="card-img-top img-thumbnail border border-dark" alt="" />
-                    @endif
-                   </div>
+                   <div class="img-container my-3 mx-4 border rounded border-dark border-3">
+                        @if ($post->image)
+                            <img src="{{asset('storage/'.$post->image)}}" class="image card-img-top " />
+                            <div class="buttons">
+                                <button class="btn btn-primary btn-view"><i class="fa-solid fa-mountain-sun me-2"></i>View</button>
+                                <a href="{{asset('storage/'.$post->image)}}" download class="btn btn-primary btn-download"><i class="fa-solid fa-download"></i></a>
+                            </div>
+                        @else
+                        <img src="{{asset('images/alert gif/postimg.jpg')}}" class="card-img-top img-thumbnail" alt="" />
+                        @endif
+                    </div>
                    <div class="card-body">
                        <p class="card-text" style="white-space: pre-wrap">{{Str::words($post->desc,20,"....")}}</p>
                        <hr />
@@ -76,12 +80,7 @@
                            @endif">
                                <i class="fa-solid fa-eye me-2"></i>see more
                            </a>
-                           {{-- <button class="learn-more">
-                            <span class="circle" aria-hidden="true">
-                            <span class="icon arrow"></span>
-                            </span>
-                            <span class="button-text">Learn More</span>
-                          </button> --}}
+
                        </div>
                    </div>
                </div>
@@ -209,6 +208,8 @@
       }
     });
   });
+
+
 </script>
 
 <script>
@@ -231,7 +232,6 @@
         localStorage.setItem('lastAlertTimestamp', currentTimestamp);
     }
 </script>
-
 
 @endsection
 
