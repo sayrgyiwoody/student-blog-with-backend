@@ -30,7 +30,6 @@
                            {{$post->topic_name}}
                            <input class="post_id" type="hidden" value="{{$post->id}}">
                        </span>
-                       <a href="{{asset('storage/'.$post->image)}}" target="_blank" download="{{$post->image}}" class="btn btn-sm btn-outline-primary float-end me-3">Download<i class="ms-2 fa-solid fa-download"></i></a>
                    </h5>
                    <div class="d-flex align-items-center ms-3 mt-1 ">
                        <div style="width: 55px; height: 55px; overflow: hidden;">

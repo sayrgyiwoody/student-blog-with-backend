@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{asset('user/css/form.css')}}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,900&display=swap" rel="stylesheet">
     <!-- Add SweetAlert CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.6/dist/sweetalert2.min.js"></script>
@@ -57,8 +58,8 @@
                                     <a href="{{route('password.request')}}">forget?</a>
 
                                 </div>
-
                             </form>
+                            <p class="text-center mt-2 mb-0 text-success"><i class="fa-solid fa-hand-point-right me-2"></i><a href="{{route('user#home')}}" class="text-success">Click to continue as guest</a></p>
                         </div>
                     </div>
                 </div>

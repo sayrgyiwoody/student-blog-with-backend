@@ -46,8 +46,7 @@
                                 <span>{{$post->save_count}}</span>
                             </div>
                             <div class="">
-                                <a href="{{asset('storage/'.$post->image)}}" target="_blank" download class="btn btn-outline-primary float-end me-3">Download<i class="ms-2 fa-solid fa-download"></i></a>
-                                <a href="{{route('user#home')}}" class="btn btn-primary me-2">
+                                <a href="{{route('user#home')}}" class="btn btn-primary float-end me-2">
                                     <i class="fa-solid fa-arrow-left me-2"></i>Back
                                 </a>
                             </div>
